@@ -10,7 +10,6 @@ defmodule AvaliaUspWeb.HomeLive do
   def assign_professores(socket) do
     socket
     |> assign_async(:professores, fn ->
-      Process.sleep(2000)
       {:ok, %{professores: AvaliaUsp.Professores.list_professores!(load: [:nome_completo])}}
     end)
   end
@@ -56,18 +55,19 @@ defmodule AvaliaUspWeb.HomeLive do
 
   defp professor_card(assigns) do
     ~H"""
-    <div class="card bg-base-100  shadow-sm">
-      <figure>
-        <img
-          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-          alt="Shoes"
-        />
-      </figure>
+    <div
+      id={"professor-card-#{@professor.id}"}
+      class="card bg-base-100 border border-accent shadow-sm cursor-pointer"
+    >
       <div class="card-body">
         <h2 class="card-title">{@professor.nome_completo}</h2>
-        <p>
-          A card component has a figure, a body part, and inside body there are title and actions parts
-        </p>
+        <%= if @professor.email do %>
+          <p class="text-sm opacity-60">{@professor.email}</p>
+        <% end %>
+        <div class="card-actions justify-start mt-2">
+          <div class="badge badge-outline">0 avaliações</div>
+          <div class="badge badge-ghost">★ --</div>
+        </div>
       </div>
     </div>
     """
