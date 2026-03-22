@@ -10,7 +10,7 @@ defmodule AvaliaUspWeb.HomeLive do
   def assign_professores(socket) do
     socket
     |> assign_async(:professores, fn ->
-      {:ok, %{professores: AvaliaUsp.Professores.list_professores!(load: [:nome_completo])}}
+      {:ok, %{professores: AvaliaUsp.Professores.list_professores!()}}
     end)
   end
 
@@ -21,6 +21,7 @@ defmodule AvaliaUspWeb.HomeLive do
         Buscar professores e avaliações
         <:subtitle>oi</:subtitle>
       </.header>
+
       <.search_form />
 
       <.async_result :let={professores} assign={@professores}>
@@ -45,10 +46,29 @@ defmodule AvaliaUspWeb.HomeLive do
     <form phx-change="search" class="w-full">
       <label class="input input-bordered input-lg w-full">
         <.icon name="hero-magnifying-glass" />
-        <input type="search" required placeholder="Search" />
+        <input type="search"  name="professor_search_input" placeholder="Search" />
       </label>
     </form>
     """
+  end
+
+  def handle_event("search", %{"professor_search_input" => search_term}, socket) do
+    socket
+    |> assign(:professores, Phoenix.LiveView.AsyncResult.loading())
+    |> start_async(:search_professores, fn -> AvaliaUsp.Professores.search_professores!(search_term) end)
+    |> noreply()
+  end
+
+  def handle_async(:search_professores, {:ok, result}, socket) do
+    socket
+    |> assign(:professores, Phoenix.LiveView.AsyncResult.ok(result))
+    |> noreply()
+  end
+
+  def handle_async(:search_professores, {:error, reason}, socket) do
+    socket
+    |> assign(:professores, Phoenix.LiveView.AsyncResult.failed(reason))
+    |> noreply()
   end
 
   attr :professor, AvaliaUsp.Professores.Professor, required: true

@@ -12,6 +12,20 @@ defmodule AvaliaUsp.Professores.Professor do
   actions do
     default_accept [:*]
     defaults [:read, :create, :destroy, :update]
+
+    read :search do
+      argument :search_term, :string do
+        description "Termo de busca para nome ou email do professor"
+        allow_nil? true
+        public? true
+      end
+
+      filter expr(
+        ilike(primeiro_nome, "%" <> ^arg(:search_term) <> "%") or
+        ilike(sobrenome, "%" <> ^arg(:search_term) <> "%") or
+        ilike(email, "%" <> ^arg(:search_term) <> "%")
+      )
+    end
   end
 
   attributes do
@@ -31,6 +45,11 @@ defmodule AvaliaUsp.Professores.Professor do
     end
 
     timestamps()
+  end
+
+
+  preparations do
+    prepare build(load: [:nome_completo])
   end
 
   calculations do

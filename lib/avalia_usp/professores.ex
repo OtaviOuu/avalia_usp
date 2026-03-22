@@ -10,6 +10,7 @@ defmodule AvaliaUsp.Professores do
   resources do
     resource AvaliaUsp.Professores.Professor do
       define :list_professores, action: :read
+      define :search_professores, action: :search, args: [:search_term]
     end
   end
 end
