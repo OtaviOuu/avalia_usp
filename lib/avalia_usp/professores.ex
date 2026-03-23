@@ -14,6 +14,10 @@ defmodule AvaliaUsp.Professores do
       define :search_professores, action: :search, args: [:search_term]
     end
 
-    resource AvaliaUsp.Professores.Avaliacao
+    resource AvaliaUsp.Professores.Avaliacao do
+      define :search_avaliacoes,
+        action: :search_avaliacaoes,
+        args: [:professor_nome_completo]
+    end
   end
 end

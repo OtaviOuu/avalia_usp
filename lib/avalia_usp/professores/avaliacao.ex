@@ -19,8 +19,18 @@ defmodule AvaliaUsp.Professores.Avaliacao do
     default_accept [:nota, :comentario]
     defaults [:read, :destroy, :update]
 
+    read :search_avaliacaoes do
+      argument :professor_nome_completo, :string do
+        description "Nome completo do professor para buscar avaliações"
+        allow_nil? false
+        public? true
+      end
+
+      filter expr(professor.nome_completo == ^arg(:professor_nome_completo))
+    end
+
     create :create do
-      accept [:nota, :comentario]
+      accept [:nota, :comentario, :disciplina_id]
       primary? true
 
       change relate_actor(:avaliador, field: :id)
@@ -32,7 +42,8 @@ defmodule AvaliaUsp.Professores.Avaliacao do
       authorize_if actor_present()
     end
 
-    policy action([:read, :destroy]) do
+    policy action([:read, :destroy, :search_avaliacaoes]) do
+      access_type :strict
       authorize_if always()
     end
   end
@@ -60,6 +71,12 @@ defmodule AvaliaUsp.Professores.Avaliacao do
       destination_attribute :id
       source_attribute :professor_id
       allow_nil? false
+      public? true
+    end
+
+    belongs_to :disciplina, AvaliaUsp.Universidades.Disciplina do
+      destination_attribute :id
+      source_attribute :disciplina_id
       public? true
     end
 
