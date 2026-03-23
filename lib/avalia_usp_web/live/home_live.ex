@@ -33,20 +33,12 @@ defmodule AvaliaUspWeb.HomeLive do
     """
   end
 
-  defp loading_spinner(assigns) do
-    ~H"""
-    <div class="flex items-center justify-center">
-      <span class="loading loading-spinner loading-xl"></span>
-    </div>
-    """
-  end
-
   defp search_form(assigns) do
     ~H"""
     <form phx-change="search" class="w-full">
       <label class="input input-bordered input-lg w-full">
         <.icon name="hero-magnifying-glass" />
-        <input type="search"  name="professor_search_input" placeholder="Search" />
+        <input type="search" name="professor_search_input" placeholder="Search" />
       </label>
     </form>
     """
@@ -55,7 +47,9 @@ defmodule AvaliaUspWeb.HomeLive do
   def handle_event("search", %{"professor_search_input" => search_term}, socket) do
     socket
     |> assign(:professores, Phoenix.LiveView.AsyncResult.loading())
-    |> start_async(:search_professores, fn -> AvaliaUsp.Professores.search_professores!(search_term) end)
+    |> start_async(:search_professores, fn ->
+      AvaliaUsp.Professores.search_professores!(search_term)
+    end)
     |> noreply()
   end
 
@@ -76,6 +70,7 @@ defmodule AvaliaUspWeb.HomeLive do
   defp professor_card(assigns) do
     ~H"""
     <div
+      phx-click={JS.navigate(~p"/professores/#{@professor.nome_completo}")}
       id={"professor-card-#{@professor.id}"}
       class="card bg-base-100 border border-accent shadow-sm cursor-pointer"
     >

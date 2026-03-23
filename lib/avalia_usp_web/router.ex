@@ -42,6 +42,7 @@ defmodule AvaliaUspWeb.Router do
     pipe_through [:browser]
 
     live "/", HomeLive, :index
+    live "/professores/:professor_nome", ProfessoresLive.Show, :show
   end
 
   scope "/", AvaliaUspWeb do

@@ -21,11 +21,15 @@ defmodule AvaliaUsp.Professores.Professor do
       end
 
       filter expr(
-        ilike(primeiro_nome, "%" <> ^arg(:search_term) <> "%") or
-        ilike(sobrenome, "%" <> ^arg(:search_term) <> "%") or
-        ilike(email, "%" <> ^arg(:search_term) <> "%")
-      )
+               ilike(primeiro_nome, "%" <> ^arg(:search_term) <> "%") or
+                 ilike(sobrenome, "%" <> ^arg(:search_term) <> "%") or
+                 ilike(email, "%" <> ^arg(:search_term) <> "%")
+             )
     end
+  end
+
+  preparations do
+    prepare build(load: [:nome_completo])
   end
 
   attributes do
@@ -47,12 +51,17 @@ defmodule AvaliaUsp.Professores.Professor do
     timestamps()
   end
 
-
-  preparations do
-    prepare build(load: [:nome_completo])
-  end
-
   calculations do
     calculate :nome_completo, :string, expr(primeiro_nome <> " " <> sobrenome)
+  end
+
+  identities do
+    identity :unique_email, [:email] do
+      description "Garante que o email seja único entre os professores"
+    end
+
+    identity :unique_nome_completo, [:primeiro_nome, :sobrenome] do
+      description "Garante que a combinação de primeiro nome e sobrenome seja única"
+    end
   end
 end

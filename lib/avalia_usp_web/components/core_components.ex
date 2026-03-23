@@ -31,6 +31,14 @@ defmodule AvaliaUspWeb.CoreComponents do
 
   alias Phoenix.LiveView.JS
 
+  def loading_spinner(assigns) do
+    ~H"""
+    <div class="flex items-center justify-center">
+      <span class="loading loading-spinner loading-xl"></span>
+    </div>
+    """
+  end
+
   @doc """
   Renders flash notices.
 
