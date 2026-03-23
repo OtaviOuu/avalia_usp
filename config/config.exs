@@ -55,7 +55,11 @@ config :spark,
 config :avalia_usp,
   ecto_repos: [AvaliaUsp.Repo],
   generators: [timestamp_type: :utc_datetime],
-  ash_domains: [AvaliaUsp.Universidades, AvaliaUsp.Professores, AvaliaUsp.Accounts]
+  ash_domains: [
+    AvaliaUsp.Universidades,
+    AvaliaUsp.Professores,
+    AvaliaUsp.Accounts
+  ]
 
 # Configure the endpoint
 config :avalia_usp, AvaliaUspWeb.Endpoint,

@@ -2,7 +2,12 @@ defmodule AvaliaUsp.Professores.Professor do
   use Ash.Resource,
     otp_app: :avalia_usp,
     domain: AvaliaUsp.Professores,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshPostgres.DataLayer,
+    extensions: [AshAdmin.Resource]
+
+  admin do
+    label_field :nome_completo
+  end
 
   postgres do
     table "professores"
@@ -49,6 +54,14 @@ defmodule AvaliaUsp.Professores.Professor do
     end
 
     timestamps()
+  end
+
+  relationships do
+    many_to_many :disciplinas, AvaliaUsp.Universidades.Disciplina do
+      through AvaliaUsp.Universidades.DisciplinaProfessor
+      destination_attribute_on_join_resource :disciplina_id
+      source_attribute_on_join_resource :professor_id
+    end
   end
 
   calculations do

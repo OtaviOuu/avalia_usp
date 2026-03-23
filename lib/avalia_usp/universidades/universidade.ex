@@ -8,4 +8,8 @@ defmodule AvaliaUsp.Universidades.Universidade do
     table "universidades"
     repo AvaliaUsp.Repo
   end
+
+  actions do
+    defaults [:read, :destroy, :create, :update]
+  end
 end

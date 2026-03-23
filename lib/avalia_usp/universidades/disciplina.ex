@@ -1,0 +1,41 @@
+defmodule AvaliaUsp.Universidades.Disciplina do
+  use Ash.Resource,
+    otp_app: :avalia_usp,
+    domain: AvaliaUsp.Universidades,
+    data_layer: AshPostgres.DataLayer,
+    extensions: [AshAdmin.Resource]
+
+  admin do
+    label_field :nome
+  end
+
+  postgres do
+    table "disciplinas"
+    repo AvaliaUsp.Repo
+  end
+
+  actions do
+    default_accept [:*]
+    defaults [:read, :destroy, :create]
+  end
+
+  attributes do
+    uuid_v7_primary_key :id
+
+    attribute :nome, :string do
+      description "Nome da disciplina"
+      allow_nil? false
+      public? true
+    end
+
+    timestamps()
+  end
+
+  relationships do
+    many_to_many :professores, AvaliaUsp.Professores.Professor do
+      through AvaliaUsp.Universidades.DisciplinaProfessor
+      destination_attribute_on_join_resource :professor_id
+      source_attribute_on_join_resource :disciplina_id
+    end
+  end
+end
