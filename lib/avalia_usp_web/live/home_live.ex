@@ -72,24 +72,35 @@ defmodule AvaliaUspWeb.HomeLive do
     <div
       phx-click={JS.navigate(~p"/professores/#{@professor.nome_completo}")}
       id={"professor-card-#{@professor.id}"}
-      class="card bg-base-100 border border-accent shadow-sm cursor-pointer"
+      class="card bg-base-100 border border-base-300 hover:border-primary transition cursor-pointer"
     >
-      <div class="card-body">
-        <h2 class="card-title">{@professor.nome_completo}</h2>
-        <%= if @professor.email do %>
-          <p class="text-sm opacity-60">{@professor.email}</p>
-        <% end %>
-        <div class="card-actions justify-start mt-2">
-          <div class="badge badge-outline">
-            {@professor.quantidade_avaliacoes_positivas} avaliações
+      <div class="card-body gap-2">
+        <div class="flex items-center justify-between">
+          <h2 class="card-title text-base">
+            {@professor.nome_completo}
+          </h2>
+
+          <div class="badge badge-ghost">
+            {@professor.media_avaliacoes}
           </div>
-          <div class="badge badge-outline">
-            {@professor.quantidade_avaliacoes_negativas} avaliações
-          </div>
-          <div class="badge badge-outline">
-            {@professor.quantidade_avaliacoes} avaliações
-          </div>
-          <div class="badge badge-ghost">★ {@professor.media_avaliacoes}</div>
+        </div>
+
+        <p class="opacity-60 truncate">
+          {@professor.email}
+        </p>
+
+        <div class="flex items-center gap-2 mt-2">
+          <span class="badge badge-success badge-outline">
+            {@professor.quantidade_avaliacoes_positivas}
+          </span>
+
+          <span class="badge badge-error badge-outline">
+            {@professor.quantidade_avaliacoes_negativas}
+          </span>
+
+          <span class="badge badge-ghost">
+            {@professor.quantidade_avaliacoes} total
+          </span>
         </div>
       </div>
     </div>
