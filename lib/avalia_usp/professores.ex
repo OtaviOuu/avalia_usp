@@ -13,5 +13,7 @@ defmodule AvaliaUsp.Professores do
       define :get_professor_by_nome_completo, action: :read, get_by: [:nome_completo]
       define :search_professores, action: :search, args: [:search_term]
     end
+
+    resource AvaliaUsp.Professores.Avaliacao
   end
 end

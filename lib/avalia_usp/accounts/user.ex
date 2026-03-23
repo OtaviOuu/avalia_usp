@@ -4,7 +4,11 @@ defmodule AvaliaUsp.Accounts.User do
     domain: AvaliaUsp.Accounts,
     data_layer: AshPostgres.DataLayer,
     authorizers: [Ash.Policy.Authorizer],
-    extensions: [AshAuthentication]
+    extensions: [AshAuthentication, AshAdmin.Resource]
+
+  admin do
+    actor? true
+  end
 
   authentication do
     add_ons do
@@ -226,6 +230,10 @@ defmodule AvaliaUsp.Accounts.User do
 
   policies do
     bypass AshAuthentication.Checks.AshAuthenticationInteraction do
+      authorize_if always()
+    end
+
+    policy action([:read]) do
       authorize_if always()
     end
   end

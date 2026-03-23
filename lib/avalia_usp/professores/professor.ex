@@ -3,7 +3,8 @@ defmodule AvaliaUsp.Professores.Professor do
     otp_app: :avalia_usp,
     domain: AvaliaUsp.Professores,
     data_layer: AshPostgres.DataLayer,
-    extensions: [AshAdmin.Resource]
+    authorizers: [Ash.Policy.Authorizer],
+    extensions: [AshAdmin.Resource, AshAuthentication]
 
   admin do
     label_field :nome_completo
@@ -18,6 +19,20 @@ defmodule AvaliaUsp.Professores.Professor do
     default_accept [:*]
     defaults [:read, :create, :destroy, :update]
 
+    update :avaliar do
+      accept []
+
+      require_atomic? false
+
+      argument :avaliacao_attrs, :map do
+        description "Atributos para criar uma nova avaliação"
+        allow_nil? false
+        public? true
+      end
+
+      change manage_relationship(:avaliacao_attrs, :avaliacoes, type: :create, on_match: :update)
+    end
+
     read :search do
       argument :search_term, :string do
         description "Termo de busca para nome ou email do professor"
@@ -30,6 +45,16 @@ defmodule AvaliaUsp.Professores.Professor do
                  ilike(sobrenome, "%" <> ^arg(:search_term) <> "%") or
                  ilike(email, "%" <> ^arg(:search_term) <> "%")
              )
+    end
+  end
+
+  policies do
+    policy action([:read, :search]) do
+      authorize_if always()
+    end
+
+    policy action([:avaliar]) do
+      authorize_if actor_present()
     end
   end
 
@@ -61,6 +86,11 @@ defmodule AvaliaUsp.Professores.Professor do
       through AvaliaUsp.Universidades.DisciplinaProfessor
       destination_attribute_on_join_resource :disciplina_id
       source_attribute_on_join_resource :professor_id
+    end
+
+    has_many :avaliacoes, AvaliaUsp.Professores.Avaliacao do
+      source_attribute :id
+      destination_attribute :professor_id
     end
   end
 
