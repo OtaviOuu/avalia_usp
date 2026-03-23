@@ -19,11 +19,21 @@ defmodule AvaliaUsp.Universidades.Disciplina do
     defaults [:read, :destroy, :create]
   end
 
+  preparations do
+    prepare build(load: [:professores, :nome_completo])
+  end
+
   attributes do
     uuid_v7_primary_key :id
 
     attribute :nome, :string do
       description "Nome da disciplina"
+      allow_nil? false
+      public? true
+    end
+
+    attribute :codigo, :string do
+      description "Código da disciplina"
       allow_nil? false
       public? true
     end
@@ -37,5 +47,13 @@ defmodule AvaliaUsp.Universidades.Disciplina do
       destination_attribute_on_join_resource :professor_id
       source_attribute_on_join_resource :disciplina_id
     end
+  end
+
+  calculations do
+    calculate :nome_completo, :string, expr(nome <> " - " <> codigo)
+  end
+
+  identities do
+    identity :unique_nome_completo, [:codigo, :nome]
   end
 end

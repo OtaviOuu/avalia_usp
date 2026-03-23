@@ -43,6 +43,8 @@ defmodule AvaliaUspWeb.Router do
 
     live "/", HomeLive, :index
     live "/professores/:professor_nome", ProfessoresLive.Show, :show
+
+    live "/professores/:professor_nome/disciplinas/:disciplina_nome", DisciiplinasLive.Show, :show
   end
 
   scope "/", AvaliaUspWeb do
