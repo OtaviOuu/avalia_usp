@@ -59,7 +59,15 @@ defmodule AvaliaUsp.Professores.Professor do
   end
 
   preparations do
-    prepare build(load: [:nome_completo])
+    prepare build(
+              load: [
+                :nome_completo,
+                :quantidade_avaliacoes,
+                :quantidade_avaliacoes_negativas,
+                :quantidade_avaliacoes_positivas,
+                :media_avaliacoes
+              ]
+            )
   end
 
   attributes do
@@ -96,6 +104,22 @@ defmodule AvaliaUsp.Professores.Professor do
 
   calculations do
     calculate :nome_completo, :string, expr(primeiro_nome <> " " <> sobrenome)
+  end
+
+  aggregates do
+    count :quantidade_avaliacoes, :avaliacoes do
+      description "Contagem de avaliações associadas a este professor"
+    end
+
+    count :quantidade_avaliacoes_positivas, :avaliacoes do
+      filter expr(nota >= 5)
+    end
+
+    avg :media_avaliacoes, :avaliacoes, :nota
+
+    count :quantidade_avaliacoes_negativas, :avaliacoes do
+      filter expr(nota < 5)
+    end
   end
 
   identities do

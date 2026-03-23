@@ -80,8 +80,16 @@ defmodule AvaliaUspWeb.HomeLive do
           <p class="text-sm opacity-60">{@professor.email}</p>
         <% end %>
         <div class="card-actions justify-start mt-2">
-          <div class="badge badge-outline">0 avaliações</div>
-          <div class="badge badge-ghost">★ --</div>
+          <div class="badge badge-outline">
+            {@professor.quantidade_avaliacoes_positivas} avaliações
+          </div>
+          <div class="badge badge-outline">
+            {@professor.quantidade_avaliacoes_negativas} avaliações
+          </div>
+          <div class="badge badge-outline">
+            {@professor.quantidade_avaliacoes} avaliações
+          </div>
+          <div class="badge badge-ghost">★ {@professor.media_avaliacoes}</div>
         </div>
       </div>
     </div>
