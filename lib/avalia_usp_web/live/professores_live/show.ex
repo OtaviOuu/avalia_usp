@@ -30,11 +30,36 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
       <.async_result :let={professor} assign={@professor}>
         <:loading><.loading_spinner /></:loading>
         <:failed :let={_failure}>erro ao buscar profesosre</:failed>
+
         <.professor_details professor={professor} />
+        <.search_form professor={professor} />
+
         <.avaliacoes_list avaliacoes={professor.avaliacoes} />
       </.async_result>
     </Layouts.app>
     """
+  end
+
+  defp search_form(assigns) do
+    ~H"""
+    <form class="flex items-center justify-center gap-4" phx-change="search" phx-debounce="500">
+      <label class="input">
+        <.icon name="hero-magnifying-glass" class="size-5 opacity-60" />
+        <input type="search" name="q" placeholder="Search" />
+      </label>
+      <select class="select" name="disciplina">
+        <option disabled selected>Disciplina</option>
+        <option :for={disciplina <- @professor.disciplinas}>{disciplina.nome}</option>
+      </select>
+    </form>
+    """
+  end
+
+  def handle_event("search", %{"q" => query, "disciplina" => disciplina}, socket) do
+    dbg({query, disciplina})
+
+    socket
+    |> noreply
   end
 
   attr :professor, :map, doc: "O professor a ser exibido"
