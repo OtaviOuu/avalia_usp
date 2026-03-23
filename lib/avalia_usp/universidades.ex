@@ -11,5 +11,6 @@ defmodule AvaliaUsp.Universidades do
     resource AvaliaUsp.Universidades.Universidade
     resource AvaliaUsp.Universidades.Disciplina
     resource AvaliaUsp.Universidades.DisciplinaProfessor
+    resource AvaliaUsp.Universidades.Faculdade
   end
 end

@@ -49,34 +49,35 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
 
   defp avaliacoes_list(assigns) do
     ~H"""
-    <ul class="list bg-base-100 rounded-box shadow-md">
-      <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Most played songs this week</li>
-
-      <li
-        :for={avaliacao <- @avaliacoes}
-        class="list-row"
-      >
-        <div>
-          <img
-            class="size-10 rounded-box"
-            src="https://img.daisyui.com/images/profile/demo/1@94.webp"
-          />
-        </div>
-        <div>
-          <div>Dio Lupa</div>
-          <div class="text-xs uppercase font-semibold opacity-60">Remaining Reason</div>
-        </div>
-        <p class="list-col-wrap text-xs">
-          {avaliacao.comentario}
-        </p>
-        <.button class="btn btn-square btn-ghost">
-          <.icon name="hero-chevron-up" />
-        </.button>
-        <.button class="btn btn-square btn-ghost">
-          <.icon name="hero-chevron-down" />
-        </.button>
-      </li>
+    <ul class="list rounded-box shadow-md bg-base-100 border border-base-300">
+      <.avaliacao_row :for={avaliacao <- @avaliacoes} avaliacao={avaliacao} />
     </ul>
+    """
+  end
+
+  defp avaliacao_row(assigns) do
+    ~H"""
+    <li class="list-row  hover:border-primary transition cursor-pointer">
+      <div>
+        <img
+          class="size-10 rounded-box"
+          src="https://img.daisyui.com/images/profile/demo/1@94.webp"
+        />
+      </div>
+      <div>
+        <div>Dio Lupa</div>
+        <div class="text-xs uppercase font-semibold opacity-60">Remaining Reason</div>
+      </div>
+      <p class="list-col-wrap text-xs">
+        {@avaliacao.comentario}
+      </p>
+      <.button class="btn btn-square btn-ghost">
+        <.icon name="hero-chevron-up" />
+      </.button>
+      <.button class="btn btn-square btn-ghost">
+        <.icon name="hero-chevron-down" />
+      </.button>
+    </li>
     """
   end
 end
