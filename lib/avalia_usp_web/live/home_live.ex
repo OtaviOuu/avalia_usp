@@ -3,10 +3,6 @@ defmodule AvaliaUspWeb.HomeLive do
 
   def mount(_params, _session, socket) do
     socket
-    |> put_flash(
-      :info,
-      "Bem-vindo ao AvaliaUsp! Explore avaliações de professores e compartilhe suas experiências."
-    )
     |> assign_professores()
     |> ok()
   end
