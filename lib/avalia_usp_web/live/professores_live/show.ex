@@ -39,9 +39,14 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
         grid_columns={1}
         theme="daisy_ui"
         query={
-          Ash.Query.for_read(AvaliaUsp.Professores.Avaliacao, :search_avaliacaoes, %{
-            professor_nome_completo: @professor_nome
-          })
+          Ash.Query.for_read(
+            AvaliaUsp.Professores.Avaliacao,
+            :search_avaliacaoes,
+            %{
+              professor_nome_completo: @professor_nome
+            },
+            load: [:avaliador]
+          )
         }
       >
         <:col field="comentario" filter search />
@@ -59,10 +64,11 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
           ]}
         />
         <:item :let={avaliacao}>
-          <div class="flex items-center justify-between p-4 border-b">
+          <div class="flex-1 items-center justify-between">
             <div>
               <p class="font-medium">Nota: {avaliacao.nota}</p>
               <p class="text-sm text-gray-600">{avaliacao.comentario}</p>
+              <p class="text-sm text-gray-600">{avaliacao.avaliador.email}</p>
             </div>
           </div>
         </:item>
