@@ -25,8 +25,7 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
     ~H"""
     <Layouts.app {assigns}>
       <.header>
-        Detalhes do Professor
-        <:subtitle>sla</:subtitle>
+        <.return_to link={~p"/"} text="voltar" />
       </.header>
       <.async_result :let={professor} assign={@professor}>
         <:loading><.loading_spinner /></:loading>

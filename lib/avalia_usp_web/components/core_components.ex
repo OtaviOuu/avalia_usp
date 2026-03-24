@@ -31,6 +31,21 @@ defmodule AvaliaUspWeb.CoreComponents do
 
   alias Phoenix.LiveView.JS
 
+  attr :link, :string, doc: "the link to navigate back to"
+  attr :text, :string, default: "Voltar", doc: "the text to show in the link"
+
+  def return_to(assigns) do
+    ~H"""
+    <.link
+      navigate={@link}
+      class="flex items-center gap-1 text-sm text-base-content/70 hover:text-base-content"
+    >
+      <.icon name="hero-arrow-left" class="size-4" />
+      <span class="leading-none">{@text}</span>
+    </.link>
+    """
+  end
+
   def loading_spinner(assigns) do
     ~H"""
     <div class="flex items-center justify-center">
