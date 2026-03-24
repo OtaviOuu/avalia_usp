@@ -16,7 +16,7 @@ defmodule AvaliaUsp.Professores.Avaliacao do
   end
 
   actions do
-    default_accept [:nota, :comentario]
+    default_accept [:nota, :comentario, :disciplina_id]
     defaults [:read, :destroy, :update]
 
     read :search_avaliacaoes do
@@ -86,5 +86,11 @@ defmodule AvaliaUsp.Professores.Avaliacao do
       allow_nil? false
       public? true
     end
+  end
+
+  identities do
+    identity :unique_avalicao_por_avaliador, [:avaliador_id, :disciplina_id, :professor_id],
+      field_names: [:avaliador_id],
+      message: "Você já avaliou este professor para esta disciplina."
   end
 end

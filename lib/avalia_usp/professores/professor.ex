@@ -30,7 +30,7 @@ defmodule AvaliaUsp.Professores.Professor do
         public? true
       end
 
-      change manage_relationship(:avaliacao_attrs, :avaliacoes, type: :create, on_match: :update)
+      change manage_relationship(:avaliacao_attrs, :avaliacoes, type: :create)
     end
 
     read :search do
