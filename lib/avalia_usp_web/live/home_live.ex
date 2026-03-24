@@ -20,7 +20,7 @@ defmodule AvaliaUspWeb.HomeLive do
       <.header>
         Buscar professores
         <:actions>
-          <.button>
+          <.button phx-click={JS.navigate(~p"/avaliar")}>
             Avaliar Professor
           </.button>
         </:actions>

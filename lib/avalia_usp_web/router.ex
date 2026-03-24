@@ -41,10 +41,17 @@ defmodule AvaliaUspWeb.Router do
   scope "/", AvaliaUspWeb do
     pipe_through [:browser]
 
-    live "/", HomeLive, :index
-    live "/professores/:professor_nome", ProfessoresLive.Show, :show
+    live_session :default,
+      on_mount: {AvaliaUspWeb.LiveUserAuth, :current_user} do
+      live "/", HomeLive, :index
+      live "/professores/:professor_nome", ProfessoresLive.Show, :show
 
-    live "/professores/:professor_nome/disciplinas/:disciplina_nome", DisciiplinasLive.Show, :show
+      live "/professores/:professor_nome/disciplinas/:disciplina_nome",
+           DisciiplinasLive.Show,
+           :show
+
+      live "/avaliar", AvaliarLive, :index
+    end
   end
 
   scope "/", AvaliaUspWeb do
