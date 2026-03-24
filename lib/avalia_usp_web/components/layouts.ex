@@ -37,7 +37,10 @@ defmodule AvaliaUspWeb.Layouts do
     ~H"""
     <header class="navbar bg-base-100 shadow-sm">
       <div class="flex-1">
-        <.link navigate={~p"/"} class="btn btn-ghost text-xl">AvaliaUSP</.link>
+        <.link navigate={~p"/"} class="btn btn-ghost text-xl">
+          <span class="text-orange-500">Avalia</span>
+          <span class="text-black ">USP</span>
+        </.link>
       </div>
 
       <div class="flex-none">

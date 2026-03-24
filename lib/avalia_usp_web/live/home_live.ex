@@ -18,8 +18,12 @@ defmodule AvaliaUspWeb.HomeLive do
     ~H"""
     <Layouts.app {assigns}>
       <.header>
-        Buscar professores e avaliações
-        <:subtitle>oi</:subtitle>
+        Buscar professores
+        <:actions>
+          <.button>
+            Avaliar Professor
+          </.button>
+        </:actions>
       </.header>
 
       <.search_form />
