@@ -20,13 +20,11 @@ defmodule AvaliaUspWeb.AvaliarLive do
     disciplinas_options = prof.disciplinas |> Enum.map(&{&1.nome, &1.id})
     dbg(disciplinas_options)
 
-    if disciplinas_options == [] do
-      dbg("Professor sem disciplinas, redirecionando...")
-
+    if prof.disciplinas == [] do
       socket
-      |> put_flash(:error, "Esse professor não tem disciplinas associadas, impossível avaliá-lo")
-      |> push_navigate(to: ~p"/")
-      |> ok()
+      |> put_flash(:error, "Esse professor não tem disciplinas associadas, impossível avaliar")
+      |> push_navigate(to: ~p"/professores/#{professor_nome}")
+      |> ok
     else
       socket
       |> assign(actor: current_user)
@@ -45,7 +43,11 @@ defmodule AvaliaUspWeb.AvaliarLive do
         <.return_to link={~p"/professores/#{@professor_nome}"} />
       </.header>
       <.professor_details professor={@professor} />
-      <.form for={@form} phx-submit="submit" class="card bg-base-100 border border-base-300 shadow-sm p-6">
+      <.form
+        for={@form}
+        phx-submit="submit"
+        class="card bg-base-100 border border-base-300 shadow-sm p-6"
+      >
         <.inputs_for :let={f} field={@form[:avaliacao_attrs]}>
           <.input field={f[:nota]} type="number" placeholder="Nota" />
           <.input field={f[:comentario]} type="textarea" placeholder="Comentário" />
@@ -58,16 +60,16 @@ defmodule AvaliaUspWeb.AvaliarLive do
   end
 
   def handle_event("submit", %{"form" => params}, socket) do
-    {disciplina_nome, _id} =
-      Enum.find(socket.assigns.disciplinas_options, fn {_nome, id} ->
-        id == params["avaliacao_attrs"]["disciplina_id"]
-      end)
-
     case AshPhoenix.Form.submit(socket.assigns.form,
            params: params,
            actor: socket.assigns.current_user
          ) do
       {:ok, _} ->
+        {disciplina_nome, _id} =
+          Enum.find(socket.assigns.disciplinas_options, fn {_nome, id} ->
+            id == Map.get(params["avaliacao_attrs"], "disciplina_id")
+          end)
+
         socket
         |> put_flash(:info, "Avaliação feita com sucesso")
         |> push_navigate(

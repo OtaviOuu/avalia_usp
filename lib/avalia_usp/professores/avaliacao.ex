@@ -36,7 +36,6 @@ defmodule AvaliaUsp.Professores.Avaliacao do
       validate compare(:nota, greater_than_or_equal_to: 1, less_than_or_equal_to: 10),
         message: "A nota deve ser entre 1 e 10."
 
-      validate present(:disciplina_id), message: "A disciplina é obrigatória."
       validate string_length(:comentario, max: 500)
 
       change relate_actor(:avaliador, field: :id)
