@@ -19,11 +19,6 @@ defmodule AvaliaUspWeb.HomeLive do
     <Layouts.app {assigns}>
       <.header>
         Buscar professores
-        <:actions>
-          <.button phx-click={JS.navigate(~p"/avaliar")}>
-            Avaliar Professor
-          </.button>
-        </:actions>
       </.header>
 
       <.search_form />

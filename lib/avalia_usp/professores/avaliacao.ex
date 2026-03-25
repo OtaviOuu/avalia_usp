@@ -33,6 +33,11 @@ defmodule AvaliaUsp.Professores.Avaliacao do
       accept [:nota, :comentario, :disciplina_id]
       primary? true
 
+      validate compare(:nota, greater_than_or_equal_to: 1, less_than_or_equal_to: 10),
+        message: "A nota deve ser entre 1 e 10."
+
+      validate string_length(:comentario, max: 500)
+
       change relate_actor(:avaliador, field: :id)
     end
   end

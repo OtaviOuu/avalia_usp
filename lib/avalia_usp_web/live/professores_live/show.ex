@@ -26,6 +26,11 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
     <Layouts.app {assigns}>
       <.header>
         <.return_to link={~p"/"} text="voltar" />
+        <:actions>
+          <.button phx-click={JS.navigate(~p"/avaliar/#{@professor_nome}")}>
+            Avaliar Professor
+          </.button>
+        </:actions>
       </.header>
       <.async_result :let={professor} assign={@professor}>
         <:loading><.loading_spinner /></:loading>

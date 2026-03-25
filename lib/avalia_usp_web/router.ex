@@ -50,7 +50,7 @@ defmodule AvaliaUspWeb.Router do
            DisciiplinasLive.Show,
            :show
 
-      live "/avaliar", AvaliarLive, :index
+      live "/avaliar/:professor_nome", AvaliarLive, :index
     end
   end
 
