@@ -48,7 +48,10 @@ defmodule AvaliaUspWeb.AvaliarLive do
   end
 
   def handle_event("submit", %{"form" => params}, socket) do
-    dbg(params)
+    {disciplina_nome, _id} =
+      Enum.find(socket.assigns.disciplinas_options, fn {_nome, id} ->
+        id == params["avaliacao_attrs"]["disciplina_id"]
+      end)
 
     case AshPhoenix.Form.submit(socket.assigns.form,
            params: params,
@@ -57,7 +60,9 @@ defmodule AvaliaUspWeb.AvaliarLive do
       {:ok, _} ->
         socket
         |> put_flash(:info, "Avaliação feita com sucesso")
-        |> push_navigate(to: ~p"/")
+        |> push_navigate(
+          to: ~p"/professores/#{socket.assigns.professor_nome}?disciplina.nome=#{disciplina_nome}"
+        )
         |> noreply()
 
       {:error, form} ->

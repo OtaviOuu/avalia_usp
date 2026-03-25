@@ -1,5 +1,6 @@
 defmodule AvaliaUspWeb.ProfessoresLive.Show do
   use AvaliaUspWeb, :live_view
+  use Cinder.UrlSync
 
   def mount(%{"professor_nome" => professor_nome}, _session, socket) do
     socket
@@ -19,6 +20,11 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
            )
        }}
     end)
+  end
+
+  def handle_params(params, uri, socket) do
+    socket = Cinder.UrlSync.handle_params(params, uri, socket)
+    {:noreply, socket}
   end
 
   def render(assigns) do
@@ -41,6 +47,7 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
         :if={@professor.ok?}
         layout={:grid}
         grid_columns={1}
+        url_state={@url_state}
         theme="daisy_ui"
         query={
           Ash.Query.for_read(
