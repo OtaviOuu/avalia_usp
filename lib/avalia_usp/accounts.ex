@@ -1,5 +1,5 @@
 defmodule AvaliaUsp.Accounts do
-  use Ash.Domain, otp_app: :avalia_usp, extensions: [AshAdmin.Domain]
+  use Ash.Domain, otp_app: :avalia_usp, extensions: [AshAdmin.Domain, AshJsonApi.Domain]
 
   admin do
     show? true

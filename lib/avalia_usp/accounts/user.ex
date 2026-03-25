@@ -4,7 +4,29 @@ defmodule AvaliaUsp.Accounts.User do
     domain: AvaliaUsp.Accounts,
     data_layer: AshPostgres.DataLayer,
     authorizers: [Ash.Policy.Authorizer],
-    extensions: [AshAuthentication, AshAdmin.Resource]
+    extensions: [AshAuthentication, AshAdmin.Resource, AshJsonApi.Resource]
+
+  json_api do
+    routes do
+      # Read actions that return *only one resource* are allowed to be used with
+      # `post` routes.
+      post :sign_in_with_password do
+        route "/sign_in"
+
+        # Given a successful request, we will modify the response to include the
+        # generated token
+        metadata fn _subject, user, _request ->
+          %{token: user.__metadata__.token}
+        end
+      end
+
+      get :me do
+        route "/me"
+      end
+    end
+
+    type "user"
+  end
 
   admin do
     actor? true
@@ -59,6 +81,11 @@ defmodule AvaliaUsp.Accounts.User do
 
   actions do
     defaults [:read]
+
+    read :me do
+      filter expr(id == actor(:id))
+      get? true
+    end
 
     read :get_by_subject do
       description "Get a user by the subject claim in a JWT"
@@ -233,7 +260,11 @@ defmodule AvaliaUsp.Accounts.User do
       authorize_if always()
     end
 
-    policy action([:read]) do
+    policy action([:me]) do
+      authorize_if actor_present()
+    end
+
+    policy action([:read, :sign_in_with_password]) do
       authorize_if always()
     end
   end
