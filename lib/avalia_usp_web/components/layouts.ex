@@ -45,6 +45,13 @@ defmodule AvaliaUspWeb.Layouts do
 
       <div class="flex-none">
         <ul class="menu menu-horizontal items-center gap-2">
+          <%= if @current_user && @current_user.is_aluno_usp? do %>
+            <li class="badge badge-info">Aluno USP</li>
+          <% else %>
+            <li class="badge badge-warning">Não Aluno USP</li>
+          <%end%>
+
+
           <li><.theme_toggle /></li>
         </ul>
       </div>
