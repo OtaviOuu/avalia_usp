@@ -83,7 +83,7 @@ defmodule AvaliaUsp.Accounts.User do
     defaults [:read]
 
     read :me do
-      filter expr(id == actor(:id))
+      filter expr(id == ^actor(:id))
       get? true
     end
 
@@ -190,6 +190,7 @@ defmodule AvaliaUsp.Accounts.User do
 
       # Sets the email from the argument
       change set_attribute(:email, arg(:email))
+      change AvaliaUsp.Accounts.Changes.IsAlunoUsp
 
       # Hashes the provided password
       change AshAuthentication.Strategy.Password.HashPasswordChange
@@ -275,6 +276,11 @@ defmodule AvaliaUsp.Accounts.User do
     attribute :email, :ci_string do
       allow_nil? false
       public? true
+    end
+
+    attribute :is_aluno_usp?, :boolean do
+      allow_nil? false
+      default false
     end
 
     attribute :hashed_password, :string do
