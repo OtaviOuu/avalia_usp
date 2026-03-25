@@ -35,13 +35,13 @@ defmodule AvaliaUspWeb.AvaliarLive do
         <.return_to link={~p"/professores/#{@professor_nome}"} />
       </.header>
       <.professor_details professor={@professor} />
-      <.form for={@form} phx-submit="submit">
+      <.form for={@form} phx-submit="submit" class="card bg-base-100 border border-base-300 shadow-sm p-6">
         <.inputs_for :let={f} field={@form[:avaliacao_attrs]}>
           <.input field={f[:nota]} type="number" placeholder="Nota" />
           <.input field={f[:comentario]} type="textarea" placeholder="Comentário" />
           <.input field={f[:disciplina_id]} type="select" options={@disciplinas_options} />
         </.inputs_for>
-        <.button>Avaliar</.button>
+        <.button class="btn btn-primary">Avaliar</.button>
       </.form>
     </Layouts.app>
     """
