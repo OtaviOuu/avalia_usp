@@ -18,14 +18,24 @@ defmodule AvaliaUspWeb.AvaliarLive do
       |> to_form()
 
     disciplinas_options = prof.disciplinas |> Enum.map(&{&1.nome, &1.id})
+    dbg(disciplinas_options)
 
-    socket
-    |> assign(actor: current_user)
-    |> assign(form: form)
-    |> assign(professor: prof)
-    |> assign(professor_nome: professor_nome)
-    |> assign(disciplinas_options: disciplinas_options)
-    |> ok()
+    if disciplinas_options == [] do
+      dbg("Professor sem disciplinas, redirecionando...")
+
+      socket
+      |> put_flash(:error, "Esse professor não tem disciplinas associadas, impossível avaliá-lo")
+      |> push_navigate(to: ~p"/")
+      |> ok()
+    else
+      socket
+      |> assign(actor: current_user)
+      |> assign(form: form)
+      |> assign(professor: prof)
+      |> assign(professor_nome: professor_nome)
+      |> assign(disciplinas_options: disciplinas_options)
+      |> ok()
+    end
   end
 
   def render(assigns) do
