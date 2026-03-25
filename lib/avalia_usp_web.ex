@@ -93,7 +93,7 @@ defmodule AvaliaUspWeb do
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())
-
+      import Phoenix.LiveView.Helpers
       # Live view and live components callbacks helpers
       def ok(socket), do: {:ok, socket}
       def halt(socket), do: {:halt, socket}

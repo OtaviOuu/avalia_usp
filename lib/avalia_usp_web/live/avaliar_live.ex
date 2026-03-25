@@ -13,6 +13,8 @@ defmodule AvaliaUspWeb.AvaliarLive do
     form =
       prof
       |> AvaliaUsp.Professores.form_to_avaliar_professor(actor: current_user)
+      # mess
+      |> AshPhoenix.Form.add_form(:avaliacao_attrs)
       |> to_form()
 
     disciplinas_options = prof.disciplinas |> Enum.map(&{&1.nome, &1.id})
@@ -34,25 +36,22 @@ defmodule AvaliaUspWeb.AvaliarLive do
       </.header>
       <.professor_details professor={@professor} />
       <.form for={@form} phx-submit="submit">
-        <.input field={@form[:nota]} type="number" placeholder="Nota" />
-        <.input field={@form[:comentario]} type="textarea" placeholder="Comentário" />
-        <.input
-          field={@form[:disciplina_id]}
-          type="select"
-          options={@disciplinas_options}
-        />
-
-        <.button>
-          Avaliar
-        </.button>
+        <.inputs_for :let={f} field={@form[:avaliacao_attrs]}>
+          <.input field={f[:nota]} type="number" placeholder="Nota" />
+          <.input field={f[:comentario]} type="textarea" placeholder="Comentário" />
+          <.input field={f[:disciplina_id]} type="select" options={@disciplinas_options} />
+        </.inputs_for>
+        <.button>Avaliar</.button>
       </.form>
     </Layouts.app>
     """
   end
 
   def handle_event("submit", %{"form" => params}, socket) do
+    dbg(params)
+
     case AshPhoenix.Form.submit(socket.assigns.form,
-           params: %{avaliacao_attrs: params},
+           params: params,
            actor: socket.assigns.current_user
          ) do
       {:ok, _} ->
@@ -70,8 +69,6 @@ defmodule AvaliaUspWeb.AvaliarLive do
             |> noreply()
 
           _ ->
-            dbg(form)
-
             socket
             |> put_flash(:error, "Erro ao avaliar professor, confira os erros abaixo")
             |> assign(:form, form)
