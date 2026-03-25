@@ -20,6 +20,7 @@ defmodule AvaliaUspWeb.AvaliarLive do
     socket
     |> assign(actor: current_user)
     |> assign(form: form)
+    |> assign(professor: prof)
     |> assign(professor_nome: professor_nome)
     |> assign(disciplinas_options: disciplinas_options)
     |> ok()
@@ -31,6 +32,7 @@ defmodule AvaliaUspWeb.AvaliarLive do
       <.header>
         <.return_to link={~p"/professores/#{@professor_nome}"} />
       </.header>
+      <.professor_details professor={@professor} />
       <.form for={@form} phx-submit="submit">
         <.input field={@form[:nota]} type="number" placeholder="Nota" />
         <.input field={@form[:comentario]} type="textarea" placeholder="Comentário" />
