@@ -31,7 +31,7 @@ defmodule AvaliaUsp.Professores.Professor do
       end
 
       validate AvaliaUsp.Professores.Validations.OnlyIfNonEmptyDisciplinas
-      change(manage_relationship(:avaliacao_attrs, :avaliacoes, type: :create))
+      change manage_relationship(:avaliacao_attrs, :avaliacoes, type: :create)
     end
 
     read :search do

@@ -10,7 +10,7 @@ defmodule AvaliaUsp.Universidades.DisciplinaProfessor do
   end
 
   actions do
-    default_accept [:*]
+    default_accept [:disciplina_id, :professor_id]
     defaults [:read, :create, :destroy]
   end
 
