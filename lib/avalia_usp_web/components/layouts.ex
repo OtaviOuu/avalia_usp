@@ -49,10 +49,7 @@ defmodule AvaliaUspWeb.Layouts do
             <li class="badge badge-info">Aluno USP</li>
           <% else %>
             <li class="badge badge-warning">Não Aluno USP</li>
-          <%end%>
-
-
-          <li><.theme_toggle /></li>
+          <% end %>
         </ul>
       </div>
     </header>

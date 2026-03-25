@@ -48,7 +48,7 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
         layout={:grid}
         grid_columns={1}
         url_state={@url_state}
-        theme="daisy_ui"
+        theme={AvaliaUspWeb.Themes.CinderTheme}
         query={
           Ash.Query.for_read(
             AvaliaUsp.Professores.Avaliacao,
