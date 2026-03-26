@@ -55,29 +55,19 @@ defmodule AvaliaUspWeb.AvaliarLive do
   end
 
   def handle_event("submit", %{"form" => params}, socket) do
+    current_user = socket.assigns.current_user
+    form = socket.assigns.form
+
     params = Map.put(params, "professor_id", socket.assigns.professor.id)
-    dbg(params)
 
-    case AshPhoenix.Form.submit(socket.assigns.form,
-           params: params,
-           actor: socket.assigns.current_user
-         ) do
+    case AshPhoenix.Form.submit(form, params: params, actor: current_user) do
       {:ok, _} ->
-        {disciplina_nome, _id} =
-          Enum.find(socket.assigns.disciplinas_options, fn {_nome, id} ->
-            id == Map.get(params, "disciplina_id")
-          end)
-
         socket
         |> put_flash(:info, "Avaliação feita com sucesso")
-        |> push_navigate(
-          to: ~p"/professores/#{socket.assigns.professor_nome}?disciplina.nome=#{disciplina_nome}"
-        )
+        |> navigate_to_professor_avaliado(params)
         |> noreply()
 
       {:error, form} ->
-        dbg(form.errors)
-
         case form.errors do
           [avaliador_id: _] ->
             socket
@@ -92,5 +82,21 @@ defmodule AvaliaUspWeb.AvaliarLive do
             |> noreply()
         end
     end
+  end
+
+  defp navigate_to_professor_avaliado(socket, form_params) do
+    # {"Disciplina Nome, "disciplina nome"}
+    disciplinas_options = socket.assigns.disciplinas_options
+    professor_nome = socket.assigns.professor_nome
+
+    {disciplina_nome, _id} =
+      Enum.find(disciplinas_options, fn {_disciplina_nome, id} ->
+        id == Map.get(form_params, "disciplina_id")
+      end)
+
+    professor_avaliado_url = ~p"/professores/#{professor_nome}?disciplina.nome=#{disciplina_nome}"
+
+    socket
+    |> push_navigate(to: professor_avaliado_url)
   end
 end
