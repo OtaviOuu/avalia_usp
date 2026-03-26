@@ -21,6 +21,7 @@ defmodule AvaliaUspWeb.HomeLive do
         <:actions></:actions>
       </.header>
 
+      <.stats_banner />
       <.search_form />
 
       <.async_result :let={professores} assign={@professores}>
@@ -101,6 +102,30 @@ defmodule AvaliaUspWeb.HomeLive do
             {@professor.quantidade_avaliacoes} total
           </span>
         </div>
+      </div>
+    </div>
+    """
+  end
+
+  defp stats_banner(assigns) do
+    ~H"""
+    <div class="stats card bg-base-100 border border-base-300  w-full">
+      <div class="stat place-items-center">
+        <div class="stat-title">Avaliações</div>
+        <div class="stat-value">31K</div>
+        <div class="stat-desc">From January 1st to February 1st</div>
+      </div>
+
+      <div class="stat place-items-center">
+        <div class="stat-title">Professores</div>
+        <div class="stat-value">1,200</div>
+        <div class="stat-desc">↘︎ 90 (14%)</div>
+      </div>
+
+      <div class="stat place-items-center">
+        <div class="stat-title">Alunos</div>
+        <div class="stat-value">1,200</div>
+        <div class="stat-desc">↘︎ 90 (14%)</div>
       </div>
     </div>
     """
