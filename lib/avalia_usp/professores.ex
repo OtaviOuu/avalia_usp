@@ -27,5 +27,13 @@ defmodule AvaliaUsp.Professores do
         action: :search_avaliacaoes,
         args: [:professor_nome_completo]
     end
+
+    resource AvaliaUsp.Professores.SolicitacaoDisciplina do
+      define :list_my_solicitacoes, action: :read_my
+
+      define :open_solicitacao,
+        action: :create,
+        args: [:nome_disciplina, :comentario, :links_uteis, :professor_id]
+    end
   end
 end

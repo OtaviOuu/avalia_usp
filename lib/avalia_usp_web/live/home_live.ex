@@ -109,7 +109,7 @@ defmodule AvaliaUspWeb.HomeLive do
 
   defp stats_banner(assigns) do
     ~H"""
-    <div class="stats card bg-base-100 border border-base-300  w-full">
+    <div class="stats stats-vertical sm:stats-horizontal card bg-base-100 border border-base-300 w-full">
       <div class="stat place-items-center">
         <div class="stat-title">Avaliações</div>
         <div class="stat-value">31K</div>

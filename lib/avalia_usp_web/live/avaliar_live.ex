@@ -39,7 +39,11 @@ defmodule AvaliaUspWeb.AvaliarLive do
       <.header>
         <.return_to link={~p"/professores/#{@professor_nome}"} />
         <:actions>
-          <.button class="btn btn-secundary" phx-disable-with="Avaliando...">
+          <.button
+            class="btn btn-secundary"
+            phx-disable-with="Avaliando..."
+            phx-click={JS.navigate(~p"/solicitacoes/#{@professor_nome}/nova-disciplina")}
+          >
             Solicitar disciplina
           </.button>
         </:actions>

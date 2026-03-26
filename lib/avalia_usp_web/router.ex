@@ -61,6 +61,10 @@ defmodule AvaliaUspWeb.Router do
            :show
 
       live "/avaliar/:professor_nome", AvaliarLive, :index
+
+      live "/solicitacoes/:professor_nome/nova-disciplina",
+           SolicitacoesLive.Index,
+           :index
     end
   end
 
