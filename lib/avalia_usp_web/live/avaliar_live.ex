@@ -11,10 +11,7 @@ defmodule AvaliaUspWeb.AvaliarLive do
       AvaliaUsp.Professores.get_professor_by_nome_completo!(professor_nome, load: [:disciplinas])
 
     form =
-      prof
-      |> AvaliaUsp.Professores.form_to_avaliar_professor(actor: current_user)
-      # mess
-      |> AshPhoenix.Form.add_form(:avaliacao_attrs)
+      AvaliaUsp.Professores.form_to_create_avaliacao(actor: current_user)
       |> to_form()
 
     disciplinas_options = prof.disciplinas |> Enum.map(&{&1.nome, &1.id})
@@ -48,11 +45,9 @@ defmodule AvaliaUspWeb.AvaliarLive do
         phx-submit="submit"
         class="card bg-base-100 border border-base-300 shadow-sm p-6"
       >
-        <.inputs_for :let={f} field={@form[:avaliacao_attrs]}>
-          <.input field={f[:nota]} type="number" placeholder="Nota" />
-          <.input field={f[:comentario]} type="textarea" placeholder="Comentário" />
-          <.input field={f[:disciplina_id]} type="select" options={@disciplinas_options} />
-        </.inputs_for>
+        <.input field={@form[:nota]} type="number" placeholder="Nota" />
+        <.input field={@form[:comentario]} type="textarea" placeholder="Comentário" />
+        <.input field={@form[:disciplina_id]} type="select" options={@disciplinas_options} />
         <.button class="btn btn-primary">Avaliar</.button>
       </.form>
     </Layouts.app>
@@ -60,6 +55,9 @@ defmodule AvaliaUspWeb.AvaliarLive do
   end
 
   def handle_event("submit", %{"form" => params}, socket) do
+    params = Map.put(params, "professor_id", socket.assigns.professor.id)
+    dbg(params)
+
     case AshPhoenix.Form.submit(socket.assigns.form,
            params: params,
            actor: socket.assigns.current_user
@@ -67,7 +65,7 @@ defmodule AvaliaUspWeb.AvaliarLive do
       {:ok, _} ->
         {disciplina_nome, _id} =
           Enum.find(socket.assigns.disciplinas_options, fn {_nome, id} ->
-            id == Map.get(params["avaliacao_attrs"], "disciplina_id")
+            id == Map.get(params, "disciplina_id")
           end)
 
         socket
@@ -78,6 +76,8 @@ defmodule AvaliaUspWeb.AvaliarLive do
         |> noreply()
 
       {:error, form} ->
+        dbg(form.errors)
+
         case form.errors do
           [avaliador_id: _] ->
             socket

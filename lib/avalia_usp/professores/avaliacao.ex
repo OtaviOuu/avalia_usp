@@ -30,7 +30,7 @@ defmodule AvaliaUsp.Professores.Avaliacao do
     end
 
     create :create do
-      accept [:nota, :comentario, :disciplina_id]
+      accept [:nota, :comentario, :disciplina_id, :professor_id]
       primary? true
 
       validate compare(:nota, greater_than_or_equal_to: 1, less_than_or_equal_to: 10),

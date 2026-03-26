@@ -19,6 +19,10 @@ defmodule AvaliaUsp.Professores do
     end
 
     resource AvaliaUsp.Professores.Avaliacao do
+      define :create_avaliacao,
+        action: :create,
+        args: [:nota, :comentario, :disciplina_id, :professor_id]
+
       define :search_avaliacoes,
         action: :search_avaliacaoes,
         args: [:professor_nome_completo]
