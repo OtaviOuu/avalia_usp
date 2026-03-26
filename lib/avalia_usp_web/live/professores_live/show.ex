@@ -33,7 +33,7 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
       <.header>
         <.return_to link={~p"/"} text="voltar" />
         <:actions>
-          <.button phx-click={JS.navigate(~p"/avaliar/#{@professor_nome}")}>
+          <.button class="btn btn-secundary" phx-click={JS.navigate(~p"/avaliar/#{@professor_nome}")}>
             Avaliar Professor
           </.button>
         </:actions>
