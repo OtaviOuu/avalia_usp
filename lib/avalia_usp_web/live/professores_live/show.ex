@@ -60,8 +60,7 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
           )
         }
       >
-        <:col field="comentario" filter search />
-        <:col field="nota" sort />
+        <:col field="comentario" search />
         <:col
           field="disciplina.nome"
           search
