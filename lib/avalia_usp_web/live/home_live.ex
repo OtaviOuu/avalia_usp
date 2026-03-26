@@ -18,7 +18,7 @@ defmodule AvaliaUspWeb.HomeLive do
     ~H"""
     <Layouts.app {assigns}>
       <.header>
-        Buscar professores
+        <:actions></:actions>
       </.header>
 
       <.search_form />
@@ -37,7 +37,7 @@ defmodule AvaliaUspWeb.HomeLive do
     <form phx-change="search" class="w-full">
       <label class="input input-bordered input-lg w-full">
         <.icon name="hero-magnifying-glass" />
-        <input type="search" name="professor_search_input" placeholder="Search" />
+        <input type="search" name="professor_search_input" placeholder="buscar professores..." />
       </label>
     </form>
     """

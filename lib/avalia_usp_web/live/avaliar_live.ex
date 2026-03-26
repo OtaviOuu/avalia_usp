@@ -38,6 +38,11 @@ defmodule AvaliaUspWeb.AvaliarLive do
     <Layouts.app {assigns}>
       <.header>
         <.return_to link={~p"/professores/#{@professor_nome}"} />
+        <:actions>
+          <.button class="btn btn-secundary" phx-disable-with="Avaliando...">
+            Solicitar disciplina
+          </.button>
+        </:actions>
       </.header>
       <.professor_details professor={@professor} />
       <.form
@@ -48,7 +53,7 @@ defmodule AvaliaUspWeb.AvaliarLive do
         <.input field={@form[:nota]} type="number" placeholder="Nota" />
         <.input field={@form[:comentario]} type="textarea" placeholder="Comentário" />
         <.input field={@form[:disciplina_id]} type="select" options={@disciplinas_options} />
-        <.button class="btn btn-primary">Avaliar</.button>
+        <.button class="btn btn-primary" phx-disable-with="Avaliando...">Avaliar</.button>
       </.form>
     </Layouts.app>
     """
