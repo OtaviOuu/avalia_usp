@@ -33,6 +33,12 @@ defmodule AvaliaUsp.Professores.SolicitacaoDisciplina do
     end
   end
 
+  validations do
+    validate present(:nome_disciplina) do
+      message "Nome da disciplina é obrigatório."
+    end
+  end
+
   attributes do
     uuid_v7_primary_key :id
 

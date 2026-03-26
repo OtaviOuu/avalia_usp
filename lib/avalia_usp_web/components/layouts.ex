@@ -45,6 +45,7 @@ defmodule AvaliaUspWeb.Layouts do
 
       <div class="flex-none">
         <ul class="menu menu-horizontal items-center gap-2">
+          <.theme_toggle />
           <%= if @current_user && @current_user.is_aluno_usp? do %>
             <li class="badge badge-info">Aluno USP</li>
           <% else %>
@@ -107,39 +108,54 @@ defmodule AvaliaUspWeb.Layouts do
     """
   end
 
-  @doc """
-  Provides dark vs light theme toggle based on themes defined in app.css.
-
-  See <head> in root.html.heex which applies the theme before page load.
-  """
   def theme_toggle(assigns) do
     ~H"""
-    <div class="card relative flex flex-row items-center border-2 border-base-300 bg-base-300 rounded-full">
-      <div class="absolute w-1/3 h-full rounded-full border-1 border-base-200 bg-base-100 brightness-200 left-0 [[data-theme=light]_&]:left-1/3 [[data-theme=dark]_&]:left-2/3 transition-[left]" />
-
-      <button
-        class="flex p-2 cursor-pointer w-1/3"
-        phx-click={JS.dispatch("phx:set-theme")}
-        data-phx-theme="system"
+    <div class="dropdown dropdown-end">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-sm gap-2">
+        <.icon name="hero-swatch" class="size-4" />
+        <span class="hidden sm:inline text-sm">Tema</span>
+        <.icon name="hero-chevron-down" class="size-3 opacity-60" />
+      </div>
+      <ul
+        tabindex="-1"
+        class="dropdown-content bg-base-200 border border-base-300 rounded-box z-50 w-44 shadow-xl max-h-80 overflow-y-auto flex flex-col gap-0.5 p-1.5 mt-1"
       >
-        <.icon name="hero-computer-desktop-micro" class="size-4 opacity-75 hover:opacity-100" />
-      </button>
-
-      <button
-        class="flex p-2 cursor-pointer w-1/3"
-        phx-click={JS.dispatch("phx:set-theme")}
-        data-phx-theme="light"
-      >
-        <.icon name="hero-sun-micro" class="size-4 opacity-75 hover:opacity-100" />
-      </button>
-
-      <button
-        class="flex p-2 cursor-pointer w-1/3"
-        phx-click={JS.dispatch("phx:set-theme")}
-        data-phx-theme="dark"
-      >
-        <.icon name="hero-moon-micro" class="size-4 opacity-75 hover:opacity-100" />
-      </button>
+        <li :for={
+          {label, theme} <- [
+            {"Light", "light"},
+            {"Cupcake", "cupcake"},
+            {"Bumblebee", "bumblebee"},
+            {"Emerald", "emerald"},
+            {"Corporate", "corporate"},
+            {"Retro", "retro"},
+            {"Cyberpunk", "cyberpunk"},
+            {"Valentine", "valentine"},
+            {"Garden", "garden"},
+            {"Lofi", "lofi"},
+            {"Pastel", "pastel"},
+            {"Fantasy", "fantasy"},
+            {"Wireframe", "wireframe"},
+            {"Cmyk", "cmyk"},
+            {"Autumn", "autumn"},
+            {"Acid", "acid"},
+            {"Lemonade", "lemonade"},
+            {"Winter", "winter"},
+            {"Nord", "nord"},
+            {"Caramellatte", "caramellatte"},
+            {"Silk", "silk"}
+          ]
+        }>
+          <input
+            type="radio"
+            name="theme-dropdown"
+            class="theme-controller w-full btn btn-xs btn-block btn-ghost justify-start font-normal"
+            aria-label={label}
+            value={theme}
+            phx-click={JS.dispatch("phx:set-theme")}
+            data-phx-theme={theme}
+          />
+        </li>
+      </ul>
     </div>
     """
   end
