@@ -80,9 +80,11 @@ defmodule AvaliaUspWeb.HomeLive do
             {@professor.nome_completo}
           </h2>
 
-          <div class="badge badge-ghost">
+          <div :if={@professor.quantidade_avaliacoes != 0} class="badge badge-ghost badge-sm">
             {@professor.media_avaliacoes}
           </div>
+
+          <div :if={@professor.quantidade_avaliacoes == 0}></div>
         </div>
 
         <p class="opacity-60 truncate">
