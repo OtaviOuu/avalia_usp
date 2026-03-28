@@ -23,16 +23,12 @@ defmodule AvaliaUspWeb.SolicitacoesLive.Index do
     ~H"""
     <Layouts.app {assigns}>
       <.header>
-        Nova Disciplina
+        Criar pedido para nova disciplina
         <:actions>
-          <.button
-            class="btn btn-secundary"
-            phx-disable-with="Solicitando..."
-          >
-            Solicitar disciplina
-          </.button>
+          <.return_to link={~p"/professores/#{@professor_nome}"} />
         </:actions>
       </.header>
+      <.professor_details professor={@professor} />
       <.form
         for={@form}
         phx-submit="open_solicitacao"

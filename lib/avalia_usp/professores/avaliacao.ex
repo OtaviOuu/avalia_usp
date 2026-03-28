@@ -40,10 +40,18 @@ defmodule AvaliaUsp.Professores.Avaliacao do
 
       change relate_actor(:avaliador, field: :id)
     end
+
+    update :like do
+      change atomic_update(:likes, expr(likes + 1))
+    end
+
+    update :dislike do
+      change atomic_update(:likes, expr(likes - 1))
+    end
   end
 
   policies do
-    policy action([:create]) do
+    policy action([:create, :like, :dislike]) do
       authorize_if actor_present()
     end
 
@@ -66,6 +74,11 @@ defmodule AvaliaUsp.Professores.Avaliacao do
       constraints max_length: 500
       public? true
       allow_nil? true
+    end
+
+    attribute :likes, :integer do
+      default 0
+      public? true
     end
 
     timestamps()

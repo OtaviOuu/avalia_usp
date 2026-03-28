@@ -24,6 +24,8 @@ defmodule AvaliaUsp.Professores do
         args: [:nota, :comentario, :disciplina_id, :professor_id]
 
       define :get_avaliacao_by_id, action: :read, get_by: [:id]
+      define :like_avaliacao, action: :like
+      define :dislike_avaliacao, action: :dislike
 
       define :search_avaliacoes,
         action: :search_avaliacaoes,

@@ -30,11 +30,11 @@ defmodule AvaliaUspWeb.AvaliacoesLive.Show do
     <Layouts.app {assigns}>
       <.header>
         <.return_to link={~p"/professores/#{@professor_nome}"} />
-        <:actions>
-          <.button class="btn btn-secundary">
+        <:actions :if={@avaliacao.ok?}>
+          <.button phx-click="like" class="btn btn-secundary">
             <.icon name="hero-hand-thumb-up" />
           </.button>
-          <.button class="btn btn-secundary">
+          <.button phx-click="dislike" class="btn btn-secundary">
             <.icon name="hero-hand-thumb-down" />
           </.button>
         </:actions>
@@ -62,9 +62,7 @@ defmodule AvaliaUspWeb.AvaliacoesLive.Show do
           </div>
 
           <div class="ml-auto shrink-0">
-            <span class="badge badge-ghost font-mono text-xs">
-              {@avaliacao.disciplina.codigo}
-            </span>
+            {@avaliacao.disciplina.codigo}
           </div>
         </div>
       </div>
@@ -79,14 +77,40 @@ defmodule AvaliaUspWeb.AvaliacoesLive.Show do
     <div class="card bg-base-100 border border-base-300 shadow-sm">
       <div class="card-body gap-4 flex items-center">
         {@avaliacao.comentario}
+      </div>
+      <div class="flex justify-between p-3 border-t border-base-300">
+        <div>
+          <.icon name="hero-hand-thumb-up" />
+          {@avaliacao.likes}
+        </div>
+
         <div class="flex items-end gap-4">
           {@avaliacao.inserted_at |> Date.to_string()}
-        </div>
-        <div class="opacity-20 text-sm">
-          id: {@avaliacao.id}
         </div>
       </div>
     </div>
     """
+  end
+
+  def handle_event("like", _params, socket) do
+    current_user = socket.assigns.current_user
+    avaliacao = socket.assigns.avaliacao.result
+
+    AvaliaUsp.Professores.like_avaliacao!(avaliacao, actor: current_user)
+
+    socket
+    |> assign_avaliacao(avaliacao.id)
+    |> noreply()
+  end
+
+  def handle_event("dislike", _params, socket) do
+    current_user = socket.assigns.current_user
+    avaliacao = socket.assigns.avaliacao.result
+
+    AvaliaUsp.Professores.dislike_avaliacao!(avaliacao, actor: current_user)
+
+    socket
+    |> assign_avaliacao(avaliacao.id)
+    |> noreply()
   end
 end
