@@ -24,6 +24,7 @@ defmodule AvaliaUspWeb.AvaliarLive do
       |> ok
     else
       socket
+      |> assign(:page_title, "Avaliar #{professor_nome}")
       |> assign(actor: current_user)
       |> assign(form: form)
       |> assign(professor: prof)

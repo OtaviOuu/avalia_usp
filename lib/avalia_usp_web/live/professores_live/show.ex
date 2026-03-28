@@ -4,6 +4,7 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
 
   def mount(%{"professor_nome" => professor_nome}, _session, socket) do
     socket
+    |> assign(:page_title, "Avaliações para #{professor_nome}")
     |> assign_professor_details(professor_nome)
     |> ok()
   end

@@ -82,14 +82,14 @@ defmodule AvaliaUspWeb.CoreComponents do
 
   def return_to(assigns) do
     ~H"""
-    <.button class="btn btn-secundary">
-      <.link
-        navigate={@link}
-        class="flex items-center gap-1"
-      >
-        <span class="">{@text}</span>
-      </.link>
-    </.button>
+    <.link
+      navigate={@link}
+      class="flex items-center gap-1"
+    >
+      <.button class="btn btn-secundary">
+        {@text}
+      </.button>
+    </.link>
     """
   end
 

@@ -12,6 +12,7 @@ defmodule AvaliaUspWeb.SolicitacoesLive.Index do
       |> to_form
 
     socket
+    |> assign(:page_title, "Abrir solicitação")
     |> assign(:professor, professor)
     |> assign(:form, form)
     |> assign(:professor_nome, professor_nome)

@@ -7,6 +7,7 @@ defmodule AvaliaUspWeb.AvaliacoesLive.Show do
         socket
       ) do
     socket
+    |> assign(:page_title, "Avaliação para #{professor_nome}")
     |> assign(:professor_nome, professor_nome)
     |> assign_avaliacao(avaliacao_id)
     |> ok
@@ -96,21 +97,45 @@ defmodule AvaliaUspWeb.AvaliacoesLive.Show do
     current_user = socket.assigns.current_user
     avaliacao = socket.assigns.avaliacao.result
 
-    AvaliaUsp.Professores.like_avaliacao!(avaliacao, actor: current_user)
+    case AvaliaUsp.Professores.like_avaliacao(avaliacao, actor: current_user) do
+      {:ok, _} ->
+        socket
+        |> assign_avaliacao(avaliacao.id)
+        |> noreply()
 
-    socket
-    |> assign_avaliacao(avaliacao.id)
-    |> noreply()
+      {:error, %Ash.Error.Forbidden{}} ->
+        socket
+        |> put_flash(:error, "Você precisa estar logado para curtir uma avaliação")
+        |> push_navigate(to: ~p"/register")
+        |> noreply()
+
+      {:error, _} ->
+        socket
+        |> put_flash(:error, "Ocorreu um erro")
+        |> noreply()
+    end
   end
 
   def handle_event("dislike", _params, socket) do
     current_user = socket.assigns.current_user
     avaliacao = socket.assigns.avaliacao.result
 
-    AvaliaUsp.Professores.dislike_avaliacao!(avaliacao, actor: current_user)
+    case AvaliaUsp.Professores.dislike_avaliacao(avaliacao, actor: current_user) do
+      {:ok, _} ->
+        socket
+        |> assign_avaliacao(avaliacao.id)
+        |> noreply()
 
-    socket
-    |> assign_avaliacao(avaliacao.id)
-    |> noreply()
+      {:error, %Ash.Error.Forbidden{}} ->
+        socket
+        |> put_flash(:error, "Você precisa estar logado para curtir uma avaliação")
+        |> push_navigate(to: ~p"/register")
+        |> noreply()
+
+      {:error, _} ->
+        socket
+        |> put_flash(:error, "Ocorreu um erro")
+        |> noreply()
+    end
   end
 end

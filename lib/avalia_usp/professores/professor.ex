@@ -55,7 +55,8 @@ defmodule AvaliaUsp.Professores.Professor do
     end
 
     policy action([:avaliar]) do
-      authorize_if actor_present()
+      forbid_if actor_absent()
+      authorize_if actor_attribute_equals(:is_aluno_usp?, true)
     end
   end
 

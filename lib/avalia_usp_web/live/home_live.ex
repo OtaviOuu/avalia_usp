@@ -3,6 +3,7 @@ defmodule AvaliaUspWeb.HomeLive do
 
   def mount(_params, _session, socket) do
     socket
+    |> assign(:page_title, "Professores")
     |> assign_professores()
     |> assign_stats()
     |> ok()
@@ -119,7 +120,7 @@ defmodule AvaliaUspWeb.HomeLive do
 
   defp stats_banner(assigns) do
     ~H"""
-    <div class="stats stats-vertical sm:stats-horizontal card bg-base-100 border border-base-300 w-full">
+    <div class="stats sm:stats-horizontal card bg-base-100 border border-base-300 w-full">
       <div class="stat place-items-center">
         <div class="stat-title">Avaliações</div>
         <div class="stat-value">{assigns.stats.result.avaliacoes}</div>
