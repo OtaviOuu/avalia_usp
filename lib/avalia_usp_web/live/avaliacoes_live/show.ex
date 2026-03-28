@@ -42,6 +42,7 @@ defmodule AvaliaUspWeb.AvaliacoesLive.Show do
       <.async_result :let={avaliacao} assign={@avaliacao}>
         <:loading><.loading_spinner /></:loading>
         <:failed :let={_failure}>erro ao buscar avaliação</:failed>
+        <.professor_details professor={avaliacao.professor} />
         <.disciplina_details_card avaliacao={avaliacao} />
         <.avaliacao_details_card avaliacao={avaliacao} />
       </.async_result>
@@ -52,28 +53,18 @@ defmodule AvaliaUspWeb.AvaliacoesLive.Show do
   defp disciplina_details_card(assigns) do
     ~H"""
     <div class="card bg-base-100 border border-base-300 shadow-sm">
-      <div class="card-body">
-        <div class="flex items-center justify-between gap-4 flex-wrap">
-          <div class="flex items-center gap-3 flex-wrap min-w-0">
-            <span class="text-base-content truncate">
-              {@avaliacao.professor.nome_completo}
-            </span>
-
-            <span class="text-base-content/40">•</span>
-
-            <span class="text-base-content truncate">
+      <div class="card-body px-6 py-4">
+        <div class="flex items-center gap-4">
+          <div class="flex flex-col gap-0.5 min-w-0">
+            <span class="text-sm text-base-content/60 truncate leading-tight">
               {@avaliacao.disciplina.nome}
-            </span>
-
-            <span class="text-base-content truncate">
-              {@avaliacao.disciplina.codigo}
             </span>
           </div>
 
-          <div class="avatar shrink-0">
-            <div class="w-15 rounded-full">
-              <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
-            </div>
+          <div class="ml-auto shrink-0">
+            <span class="badge badge-ghost font-mono text-xs">
+              {@avaliacao.disciplina.codigo}
+            </span>
           </div>
         </div>
       </div>
@@ -86,10 +77,10 @@ defmodule AvaliaUspWeb.AvaliacoesLive.Show do
   defp avaliacao_details_card(assigns) do
     ~H"""
     <div class="card bg-base-100 border border-base-300 shadow-sm">
-      <div class="card-body gap-4 flex items-end">
+      <div class="card-body gap-4 flex items-center">
         {@avaliacao.comentario}
         <div class="flex items-end gap-4">
-          {@avaliacao.inserted_at}
+          {@avaliacao.inserted_at |> Date.to_string()}
         </div>
         <div class="opacity-20 text-sm">
           id: {@avaliacao.id}
