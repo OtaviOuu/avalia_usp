@@ -31,6 +31,29 @@ defmodule AvaliaUspWeb.CoreComponents do
 
   alias Phoenix.LiveView.JS
 
+  attr :avaliacao, :map, required: true
+
+  def avaliacao_details_card(assigns) do
+    ~H"""
+    <div class="card bg-base-100 border border-base-300 shadow-sm">
+      <div class="card-body gap-4 flex items-center">
+        {@avaliacao.comentario}
+      </div>
+
+      <div class="flex justify-between p-3 border-t border-base-300">
+        <div>
+          <.icon name="hero-hand-thumb-up" />
+          {@avaliacao.likes}
+        </div>
+
+        <div class="flex items-end gap-4">
+          {@avaliacao.inserted_at |> Date.to_string()}
+        </div>
+      </div>
+    </div>
+    """
+  end
+
   attr :professor, :map, doc: "O professor a ser exibido"
 
   def professor_details(assigns) do

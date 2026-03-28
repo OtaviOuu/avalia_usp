@@ -132,7 +132,7 @@ defmodule AvaliaUspWeb.Themes.CinderTheme do
   set :grid_container_class, "flex flex-col gap-4 sm:gap-6"
 
   set :grid_item_class,
-      "card bg-base-100 border border-base-300 p-3 shadow-sm hover:border-primary transition cursor-pointer sm:p-4 lg:p-6"
+      "card"
 
   set :grid_item_clickable_class,
       "cursor-pointer hover:shadow-md hover:border-primary/50 transition-all"

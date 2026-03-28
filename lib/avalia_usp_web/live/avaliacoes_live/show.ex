@@ -71,28 +71,6 @@ defmodule AvaliaUspWeb.AvaliacoesLive.Show do
     """
   end
 
-  attr :avaliacao, :map, required: true
-
-  defp avaliacao_details_card(assigns) do
-    ~H"""
-    <div class="card bg-base-100 border border-base-300 shadow-sm">
-      <div class="card-body gap-4 flex items-center">
-        {@avaliacao.comentario}
-      </div>
-      <div class="flex justify-between p-3 border-t border-base-300">
-        <div>
-          <.icon name="hero-hand-thumb-up" />
-          {@avaliacao.likes}
-        </div>
-
-        <div class="flex items-end gap-4">
-          {@avaliacao.inserted_at |> Date.to_string()}
-        </div>
-      </div>
-    </div>
-    """
-  end
-
   def handle_event("like", _params, socket) do
     current_user = socket.assigns.current_user
     avaliacao = socket.assigns.avaliacao.result

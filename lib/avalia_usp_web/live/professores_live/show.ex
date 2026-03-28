@@ -80,13 +80,7 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
           ]}
         />
         <:item :let={avaliacao}>
-          <div class="flex-1 items-center justify-between">
-            <div>
-              <p class="font-medium">Nota: {avaliacao.nota}</p>
-              <p class="text-sm text-gray-600">{avaliacao.comentario}</p>
-              <p class="text-sm text-gray-600">{avaliacao.avaliador.email}</p>
-            </div>
-          </div>
+          <.avaliacao_details_card avaliacao={avaliacao} />
         </:item>
       </Cinder.collection>
     </Layouts.app>

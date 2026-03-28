@@ -55,9 +55,14 @@ defmodule AvaliaUspWeb.AvaliarLive do
         phx-submit="submit"
         class="card bg-base-100 border border-base-300 shadow-sm p-6"
       >
+        <.input field={@form[:disciplina_id]} type="select" options={@disciplinas_options} />
+
         <.input field={@form[:nota]} type="number" placeholder="Nota" />
         <.input field={@form[:comentario]} type="textarea" placeholder="Comentário" />
-        <.input field={@form[:disciplina_id]} type="select" options={@disciplinas_options} />
+        <div class="flex flex-row justify-between">
+          <.input field={@form[:cobra_presenca]} type="checkbox" label="Cobra presença?" />
+        </div>
+
         <.button class="btn btn-primary" phx-disable-with="Avaliando...">Avaliar</.button>
       </.form>
     </Layouts.app>

@@ -30,7 +30,7 @@ defmodule AvaliaUsp.Professores.Avaliacao do
     end
 
     create :create do
-      accept [:nota, :comentario, :disciplina_id, :professor_id]
+      accept [:nota, :comentario, :disciplina_id, :professor_id, :cobra_presenca]
       primary? true
 
       validate compare(:nota, greater_than_or_equal_to: 1, less_than_or_equal_to: 10),
@@ -79,6 +79,11 @@ defmodule AvaliaUsp.Professores.Avaliacao do
 
     attribute :likes, :integer do
       default 0
+      public? true
+    end
+
+    attribute :cobra_presenca, :boolean do
+      allow_nil? false
       public? true
     end
 
