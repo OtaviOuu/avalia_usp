@@ -23,6 +23,15 @@ defmodule AvaliaUsp.Professores.SolicitacaoDisciplina do
       accept [:nome_disciplina, :comentario, :links_uteis, :professor_id]
       primary? true
 
+      validate present(:nome_disciplina) do
+        message "Nome da disciplina é obrigatório."
+      end
+
+      validate string_length(:comentario, max: 500, min: 5) do
+        message "O comentário deve ter entre 5 e 500 caracteres."
+        where present(:comentario)
+      end
+
       change relate_actor(:user, field: :id)
     end
   end
