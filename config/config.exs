@@ -75,6 +75,7 @@ config :avalia_usp,
   ecto_repos: [AvaliaUsp.Repo],
   generators: [timestamp_type: :utc_datetime],
   ash_domains: [
+    AvaliaUsp.Analytics,
     AvaliaUsp.Universidades,
     AvaliaUsp.Professores,
     AvaliaUsp.Accounts

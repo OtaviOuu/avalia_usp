@@ -4,6 +4,7 @@ defmodule AvaliaUspWeb.HomeLive do
   def mount(_params, _session, socket) do
     socket
     |> assign_professores()
+    |> assign_stats()
     |> ok()
   end
 
@@ -14,6 +15,13 @@ defmodule AvaliaUspWeb.HomeLive do
     end)
   end
 
+  def assign_stats(socket) do
+    socket
+    |> assign_async(:stats, fn ->
+      {:ok, %{stats: AvaliaUsp.Analytics.get_geral_aggregates!()}}
+    end)
+  end
+
   def render(assigns) do
     ~H"""
     <Layouts.app {assigns}>
@@ -21,7 +29,7 @@ defmodule AvaliaUspWeb.HomeLive do
         <:actions></:actions>
       </.header>
 
-      <.stats_banner />
+      <.stats_banner :if={@stats.ok?} stats={@stats} />
       <.search_form />
 
       <.async_result :let={professores} assign={@professores}>
@@ -114,20 +122,17 @@ defmodule AvaliaUspWeb.HomeLive do
     <div class="stats stats-vertical sm:stats-horizontal card bg-base-100 border border-base-300 w-full">
       <div class="stat place-items-center">
         <div class="stat-title">Avaliações</div>
-        <div class="stat-value">31K</div>
-        <div class="stat-desc">From January 1st to February 1st</div>
+        <div class="stat-value">{assigns.stats.result.avaliacoes}</div>
       </div>
 
       <div class="stat place-items-center">
         <div class="stat-title">Professores</div>
-        <div class="stat-value">1,200</div>
-        <div class="stat-desc">↘︎ 90 (14%)</div>
+        <div class="stat-value">{assigns.stats.result.professores}</div>
       </div>
 
       <div class="stat place-items-center">
-        <div class="stat-title">Alunos</div>
-        <div class="stat-value">1,200</div>
-        <div class="stat-desc">↘︎ 90 (14%)</div>
+        <div class="stat-title">Disciplinas</div>
+        <div class="stat-value">{assigns.stats.result.disciplinas}</div>
       </div>
     </div>
     """
