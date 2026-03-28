@@ -23,6 +23,8 @@ defmodule AvaliaUsp.Professores do
         action: :create,
         args: [:nota, :comentario, :disciplina_id, :professor_id]
 
+      define :get_avaliacao_by_id, action: :read, get_by: [:id]
+
       define :search_avaliacoes,
         action: :search_avaliacaoes,
         args: [:professor_nome_completo]

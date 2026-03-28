@@ -47,6 +47,11 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
         :if={@professor.ok?}
         layout={:grid}
         grid_columns={1}
+        click={
+          fn avaliacao ->
+            JS.navigate(~p"/professores/#{@professor_nome}/avaliacoes/#{avaliacao.id}")
+          end
+        }
         url_state={@url_state}
         theme={AvaliaUspWeb.Themes.CinderTheme}
         query={
