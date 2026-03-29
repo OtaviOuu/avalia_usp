@@ -74,7 +74,7 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
           filter={[
             type: :select,
             label: "Filtrar por disciplina",
-            prompt: "Selecione uma disciplina",
+            prompt: "Todas",
             options:
               Enum.map(@professor.result.disciplinas, fn disciplina ->
                 {disciplina.nome, disciplina.nome}

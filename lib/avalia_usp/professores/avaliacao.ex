@@ -33,6 +33,9 @@ defmodule AvaliaUsp.Professores.Avaliacao do
       accept [:nota, :comentario, :disciplina_id, :professor_id, :cobra_presenca]
       primary? true
 
+      validate present(:nota),
+        message: "A nota é obrigatória."
+
       validate compare(:nota, greater_than_or_equal_to: 1, less_than_or_equal_to: 10),
         message: "A nota deve ser entre %{greater_than_or_equal_to} e %{less_than_or_equal_to}."
 

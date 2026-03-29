@@ -40,19 +40,6 @@ defmodule AvaliaUspWeb.Themes.CinderTheme do
 
   set :filter_date_input_class, "w-full"
 
-  # Select
-  set :filter_select_container_class, "relative"
-  set :filter_select_input_class, "w-full"
-
-  set :filter_select_dropdown_class,
-      "absolute z-50 mt-1 w-full bg-base-100 border border-base-300 rounded-lg shadow-lg max-h-60 overflow-auto"
-
-  set :filter_select_option_class,
-      "px-3 py-2 text-sm text-base-content hover:bg-base-200 cursor-pointer"
-
-  set :filter_select_placeholder_class, "text-base-content/40"
-  set :filter_select_arrow_class, "w-4 h-4 flex-shrink-0 text-base-content/60"
-
   # Multiselect
   set :filter_multiselect_container_class, "relative"
 
