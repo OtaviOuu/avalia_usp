@@ -92,7 +92,6 @@ defmodule AvaliaUspWeb.AvaliarLive do
 
           _ ->
             socket
-            |> put_flash(:error, "Erro ao avaliar professor, confira os erros abaixo")
             |> assign(:form, form)
             |> noreply()
         end
