@@ -7,6 +7,22 @@
 # General application configuration
 import Config
 
+config :avalia_usp, AvaliaUsp.Vault,
+  ciphers: [
+    default: {
+      Cloak.Ciphers.AES.GCM,
+      # In AES.GCM, it is important to specify 12-byte IV length for
+      # interoperability with other encryption software. See this GitHub
+      # issue for more details:
+      # https://github.com/danielberkompas/cloak/issues/93
+      #
+      # In Cloak 2.0, this will be the default iv length for AES.GCM.
+      tag: "AES.GCM.V1",
+      key: Base.decode64!("omTnvy2ZkPIbUAoPev2uZZH6jjv0Hb/uCq7vWV7Aipw="),
+      iv_length: 12
+    }
+  ]
+
 config :mime,
   extensions: %{"json" => "application/vnd.api+json"},
   types: %{"application/vnd.api+json" => ["json"]}

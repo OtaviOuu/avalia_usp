@@ -16,7 +16,8 @@ defmodule AvaliaUsp.Application do
       # {AvaliaUsp.Worker, arg},
       # Start to serve requests, typically the last entry
       AvaliaUspWeb.Endpoint,
-      {AshAuthentication.Supervisor, [otp_app: :avalia_usp]}
+      {AshAuthentication.Supervisor, [otp_app: :avalia_usp]},
+      AvaliaUsp.Vault
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

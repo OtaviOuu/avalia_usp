@@ -4,7 +4,7 @@ defmodule AvaliaUsp.Professores.Avaliacao do
     domain: AvaliaUsp.Professores,
     data_layer: AshPostgres.DataLayer,
     authorizers: [Ash.Policy.Authorizer],
-    extensions: [AshAdmin.Resource, AshAuthentication, AshPhoenix]
+    extensions: [AshAdmin.Resource, AshAuthentication, AshPhoenix, AshCloak]
 
   admin do
     label_field :id
@@ -13,6 +13,14 @@ defmodule AvaliaUsp.Professores.Avaliacao do
   postgres do
     table "avaliacaos"
     repo AvaliaUsp.Repo
+  end
+
+  cloak do
+    vault(AvaliaUsp.Vault)
+
+    attributes([:comentario])
+
+    decrypt_by_default([:comentario])
   end
 
   actions do
