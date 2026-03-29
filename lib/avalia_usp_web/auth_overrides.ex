@@ -14,11 +14,6 @@ defmodule AvaliaUspWeb.AuthOverrides do
   #   set :text_class, "bg-red-500"
   # end
 
-  override AshAuthentication.Phoenix.Components.Banner do
-    set :image_url, "/images/logo.png"
-    set :image_class, "h-18 w-auto"
-  end
-
   # override AshAuthentication.Phoenix.Components.SignIn do
   #  set :show_banner, false
   # end

@@ -126,7 +126,7 @@ defmodule AvaliaUspWeb.Themes.CinderTheme do
   set :search_input_class,
       "input input-bordered input-sm sm:input-md w-full sm:w-64 lg:w-80 focus:input-primary"
 
-  set :search_icon_class, "w-4 h-4 text-base-content/40"
+  set :search_icon_class, ""
 
   # Grid
   set :grid_container_class, "flex flex-col gap-4 sm:gap-6"

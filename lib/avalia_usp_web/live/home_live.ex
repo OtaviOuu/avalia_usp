@@ -54,12 +54,25 @@ defmodule AvaliaUspWeb.HomeLive do
   end
 
   def handle_event("search", %{"professor_search_input" => search_term}, socket) do
-    socket
-    |> assign(:professores, Phoenix.LiveView.AsyncResult.loading())
-    |> start_async(:search_professores, fn ->
-      AvaliaUsp.Professores.search_professores!(search_term)
-    end)
-    |> noreply()
+    search_term = String.trim(search_term)
+
+    case search_term do
+      "" ->
+        socket
+        |> assign(:professores, Phoenix.LiveView.AsyncResult.loading())
+        |> start_async(:search_professores, fn ->
+          AvaliaUsp.Professores.list_professores!()
+        end)
+        |> noreply()
+
+      _ ->
+        socket
+        |> assign(:professores, Phoenix.LiveView.AsyncResult.loading())
+        |> start_async(:search_professores, fn ->
+          AvaliaUsp.Professores.search_professores!(search_term)
+        end)
+        |> noreply()
+    end
   end
 
   def handle_async(:search_professores, {:ok, result}, socket) do

@@ -69,9 +69,12 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
         <:col field="comentario" search />
         <:col
           field="disciplina.nome"
+          name="Disciplina"
           search
           filter={[
             type: :select,
+            label: "Filtrar por disciplina",
+            prompt: "Selecione uma disciplina",
             options:
               Enum.map(@professor.result.disciplinas, fn disciplina ->
                 {disciplina.nome, disciplina.nome}

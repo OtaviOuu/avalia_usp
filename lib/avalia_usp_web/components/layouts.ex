@@ -49,7 +49,7 @@ defmodule AvaliaUspWeb.Layouts do
           <%= if @current_user && @current_user.is_aluno_usp? do %>
             <li class="badge badge-info">Aluno USP</li>
           <% else %>
-            <li class="badge badge-warning">Não Aluno USP</li>
+            <li :if={@current_user} class="badge badge-warning">Não Aluno USP</li>
           <% end %>
         </ul>
       </div>
