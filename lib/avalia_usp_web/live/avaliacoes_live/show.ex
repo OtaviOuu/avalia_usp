@@ -14,8 +14,12 @@ defmodule AvaliaUspWeb.AvaliacoesLive.Show do
   end
 
   defp assign_avaliacao(socket, avaliacao_id) do
+    professor_nome = socket.assigns.professor_nome
+
     socket
     |> assign_async(:avaliacao, fn ->
+      AvaliaUsp.Professores.get_professor_by_nome_completo!(professor_nome)
+
       {:ok,
        %{
          avaliacao:
