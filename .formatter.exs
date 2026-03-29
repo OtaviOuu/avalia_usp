@@ -1,5 +1,6 @@
 [
   import_deps: [
+    :ash_rate_limiter,
     :ash_json_api,
     :cinder,
     :ash_admin,

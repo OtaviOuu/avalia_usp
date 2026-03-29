@@ -41,6 +41,8 @@ defmodule AvaliaUsp.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:hammer, "~> 7.0"},
+      {:ash_rate_limiter, "~> 1.0"},
       {:open_api_spex, "~> 3.0"},
       {:ash_json_api, "~> 1.0"},
       {:cinder, "~> 0.12"},

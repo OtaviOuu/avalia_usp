@@ -23,6 +23,8 @@ config :avalia_usp, AvaliaUsp.Vault,
     }
   ]
 
+config :avalia_usp, :ash_rate_limiter, hammer: AvaliaUsp.Hammer
+
 config :mime,
   extensions: %{"json" => "application/vnd.api+json"},
   types: %{"application/vnd.api+json" => ["json"]}
@@ -52,6 +54,7 @@ config :spark,
     remove_parens?: true,
     "Ash.Resource": [
       section_order: [
+        :rate_limit,
         :json_api,
         :admin,
         :authentication,

@@ -85,7 +85,17 @@ defmodule AvaliaUspWeb.AvaliacoesLive.Show do
         |> assign_avaliacao(avaliacao.id)
         |> noreply()
 
-      {:error, %Ash.Error.Forbidden{}} ->
+      {:error,
+       %Ash.Error.Forbidden{
+         errors: [
+           %AshRateLimiter.LimitExceeded{}
+         ]
+       }} ->
+        socket
+        |> put_flash(:error, "calma fí")
+        |> noreply()
+
+      {:error, %Ash.Error.Forbidden{} = a} ->
         socket
         |> put_flash(:error, "Você precisa estar logado para curtir uma avaliação")
         |> push_navigate(to: ~p"/register")
@@ -102,15 +112,25 @@ defmodule AvaliaUspWeb.AvaliacoesLive.Show do
     current_user = socket.assigns.current_user
     avaliacao = socket.assigns.avaliacao.result
 
-    case AvaliaUsp.Professores.dislike_avaliacao(avaliacao, actor: current_user) do
+    case AvaliaUsp.Professores.like_avaliacao(avaliacao, actor: current_user) do
       {:ok, _} ->
         socket
         |> assign_avaliacao(avaliacao.id)
         |> noreply()
 
-      {:error, %Ash.Error.Forbidden{}} ->
+      {:error,
+       %Ash.Error.Forbidden{
+         errors: [
+           %AshRateLimiter.LimitExceeded{}
+         ]
+       }} ->
         socket
-        |> put_flash(:error, "Você precisa estar logado para curtir uma avaliação")
+        |> put_flash(:error, "calma fí")
+        |> noreply()
+
+      {:error, %Ash.Error.Forbidden{} = a} ->
+        socket
+        |> put_flash(:error, "Você precisa estar logado para deslike uma avaliação")
         |> push_navigate(to: ~p"/register")
         |> noreply()
 

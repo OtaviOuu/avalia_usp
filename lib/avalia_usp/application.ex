@@ -8,6 +8,7 @@ defmodule AvaliaUsp.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      {AvaliaUsp.Hammer, [clean_period: 60000]},
       AvaliaUspWeb.Telemetry,
       AvaliaUsp.Repo,
       {DNSCluster, query: Application.get_env(:avalia_usp, :dns_cluster_query) || :ignore},

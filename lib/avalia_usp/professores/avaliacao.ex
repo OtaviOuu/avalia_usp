@@ -4,7 +4,25 @@ defmodule AvaliaUsp.Professores.Avaliacao do
     domain: AvaliaUsp.Professores,
     data_layer: AshPostgres.DataLayer,
     authorizers: [Ash.Policy.Authorizer],
-    extensions: [AshAdmin.Resource, AshAuthentication, AshPhoenix, AshCloak]
+    extensions: [AshAdmin.Resource, AshAuthentication, AshPhoenix, AshCloak, AshRateLimiter]
+
+  rate_limit do
+    backend AvaliaUsp.Hammer
+
+    action :like,
+      limit: 5,
+      per: :timer.minutes(2),
+      key: fn changeset, context ->
+        "user:#{context.actor.id}:like"
+      end
+
+    action :dislike,
+      limit: 5,
+      per: :timer.minutes(2),
+      key: fn changeset, context ->
+        "user:#{context.actor.id}:dislike"
+      end
+  end
 
   admin do
     label_field :id
@@ -54,10 +72,13 @@ defmodule AvaliaUsp.Professores.Avaliacao do
     end
 
     update :like do
+      require_atomic? false
       change atomic_update(:likes, expr(likes + 1))
     end
 
     update :dislike do
+      require_atomic? false
+
       change atomic_update(:likes, expr(likes - 1))
     end
   end
