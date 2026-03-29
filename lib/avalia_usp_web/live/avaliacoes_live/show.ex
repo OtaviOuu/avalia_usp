@@ -95,7 +95,7 @@ defmodule AvaliaUspWeb.AvaliacoesLive.Show do
         |> put_flash(:error, "calma fí")
         |> noreply()
 
-      {:error, %Ash.Error.Forbidden{} = a} ->
+      {:error, %Ash.Error.Forbidden{}} ->
         socket
         |> put_flash(:error, "Você precisa estar logado para curtir uma avaliação")
         |> push_navigate(to: ~p"/register")
@@ -112,7 +112,7 @@ defmodule AvaliaUspWeb.AvaliacoesLive.Show do
     current_user = socket.assigns.current_user
     avaliacao = socket.assigns.avaliacao.result
 
-    case AvaliaUsp.Professores.like_avaliacao(avaliacao, actor: current_user) do
+    case AvaliaUsp.Professores.dislike_avaliacao(avaliacao, actor: current_user) do
       {:ok, _} ->
         socket
         |> assign_avaliacao(avaliacao.id)
