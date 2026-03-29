@@ -181,7 +181,7 @@ defmodule AvaliaUspWeb.Themes.CinderTheme do
   set :loading_spinner_class, "loading loading-spinner loading-lg text-primary"
 
   # Empty / erro
-  set :empty_class, "text-center py-8 sm:py-12 text-base-content/40"
+  set :empty_class, "text-center text-base-content/40"
   set :error_container_class, "alert alert-error"
   set :error_message_class, "text-sm"
 end

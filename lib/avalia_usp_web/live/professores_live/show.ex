@@ -85,6 +85,9 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
         <:item :let={avaliacao}>
           <.avaliacao_details_card avaliacao={avaliacao} />
         </:item>
+        <:empty>
+          <.avaliacao_details_card_empty />
+        </:empty>
       </Cinder.collection>
     </Layouts.app>
     """

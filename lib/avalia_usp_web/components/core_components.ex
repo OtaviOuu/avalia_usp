@@ -31,6 +31,18 @@ defmodule AvaliaUspWeb.CoreComponents do
 
   alias Phoenix.LiveView.JS
 
+  def avaliacao_details_card_empty(assigns) do
+    ~H"""
+    <div class="card p-4 bg-base-100 border border-base-300 shadow-sm">
+      <div class="card-body flex flex-col items-center justify-center text-center">
+        <p class="font-semibold text-base-content">
+          Nenhuma avaliação encontrada
+        </p>
+      </div>
+    </div>
+    """
+  end
+
   attr :avaliacao, :map, required: true
 
   def avaliacao_details_card(assigns) do
