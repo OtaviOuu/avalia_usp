@@ -54,6 +54,8 @@ defmodule AvaliaUspWeb.Router do
     live_session :default,
       on_mount: {AvaliaUspWeb.LiveUserAuth, :current_user} do
       live "/", HomeLive, :index
+      live "/professores/ranking", RankingLive
+
       live "/professores/:professor_nome", ProfessoresLive.Show, :show
 
       live "/professores/:professor_nome/disciplinas/:disciplina_nome",

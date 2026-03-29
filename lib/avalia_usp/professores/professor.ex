@@ -88,6 +88,11 @@ defmodule AvaliaUsp.Professores.Professor do
       allow_nil? true
     end
 
+    attribute :profile_picture_url, :string do
+      public? true
+      default "/images/default_profile_pic.png"
+    end
+
     timestamps()
   end
 
