@@ -24,8 +24,8 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
   end
 
   def handle_params(params, uri, socket) do
-    socket = Cinder.UrlSync.handle_params(params, uri, socket)
-    {:noreply, socket}
+    Cinder.UrlSync.handle_params(params, uri, socket)
+    |> noreply()
   end
 
   def render(assigns) do
@@ -80,6 +80,17 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
                 {disciplina.nome, disciplina.nome}
               end),
             match_mode: :any
+          ]}
+        />
+        <:col
+          field="avaliador.is_aluno_usp?"
+          filter={[
+            type: :multi_checkboxes,
+            label: "Avaliador verificado?",
+            options: [
+              {"Sim", "true"},
+              {"Não", "false"}
+            ]
           ]}
         />
         <:item :let={avaliacao}>

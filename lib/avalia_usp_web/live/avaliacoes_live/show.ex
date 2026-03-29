@@ -24,7 +24,7 @@ defmodule AvaliaUspWeb.AvaliacoesLive.Show do
        %{
          avaliacao:
            AvaliaUsp.Professores.get_avaliacao_by_id!(avaliacao_id,
-             load: [:professor, :disciplina]
+             load: [:professor, :disciplina, :avaliador]
            )
        }}
     end)

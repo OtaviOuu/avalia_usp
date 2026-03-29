@@ -57,7 +57,15 @@ defmodule AvaliaUspWeb.CoreComponents do
           <.icon name="hero-hand-thumb-up" />
           {@avaliacao.likes}
         </div>
-
+        <div class="flex items-end gap-4">
+          <p class="text-sm font-medium text-base-content/20">
+            <%= if @avaliacao.avaliador.is_aluno_usp? do %>
+              Avaliador verificado
+            <% else %>
+              Avaliador não verificado
+            <% end %>
+          </p>
+        </div>
         <div class="flex items-end gap-4">
           {@avaliacao.inserted_at |> Date.to_string()}
         </div>
