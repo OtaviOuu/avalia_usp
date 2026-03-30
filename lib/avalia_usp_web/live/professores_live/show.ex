@@ -83,6 +83,13 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
           ]}
         />
         <:col
+          field="nota"
+          filter={[
+            type: :number_range,
+            min: 0, max: 10, step: 1
+          ]}
+        />
+        <:col
           field="avaliador.is_aluno_usp?"
           filter={[
             type: :multi_checkboxes,

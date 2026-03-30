@@ -65,16 +65,16 @@ defmodule AvaliaUspWeb.Themes.CinderTheme do
   set :filter_checkbox_label_class, "text-sm text-base-content cursor-pointer"
 
   # Multicheckboxes
-  set :filter_multicheckboxes_container_class, "flex flex-wrap gap-2 sm:gap-3"
-  set :filter_multicheckboxes_option_class, "flex items-center gap-1.5"
-  set :filter_multicheckboxes_checkbox_class, "checkbox checkbox-sm checkbox-primary"
-  set :filter_multicheckboxes_label_class, "text-sm text-base-content cursor-pointer"
+  set :filter_multicheckboxes_container_class, "flex flex-row gap-3"
+  # set :filter_multicheckboxes_option_class, "flex items-center gap-1.5"
+  # set :filter_multicheckboxes_checkbox_class, "checkbox checkbox-sm checkbox-primary"
+  # set :filter_multicheckboxes_label_class, "text-sm text-base-content cursor-pointer"
 
   # Range
   set :filter_range_container_class,
-      "flex flex-col sm:flex-row items-stretch sm:items-center gap-2"
+      "flex flex-row  sm:flex-row items-stretch sm:items-center"
 
-  set :filter_range_input_group_class, "flex items-center gap-2 flex-1"
+  set :filter_range_input_group_class, "input flex items-center"
 
   set :filter_range_separator_class,
       "hidden sm:flex items-center px-2 text-sm text-base-content/40"
@@ -133,8 +133,9 @@ defmodule AvaliaUspWeb.Themes.CinderTheme do
   set :list_selection_container_class, "mb-2"
 
   # Seleção
-  set :selection_checkbox_class, "checkbox checkbox-sm checkbox-primary"
-  set :selected_item_class, "ring-2 ring-primary"
+  # set :selection_checkbox_class, "checkbox checkbox-sm checkbox-primary"
+
+  #  set :selected_item_class, "bg-primary/20"
 
   # Bulk actions
   set :bulk_actions_container_class,
