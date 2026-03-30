@@ -110,7 +110,7 @@ defmodule AvaliaUspWeb.CoreComponents do
         <div class="flex items-center gap-4">
           <div class="avatar">
             <div class="w-16 rounded-full">
-              <img src="https://img.daisyui.com/images/profile/demo/2@94.webp" />
+              <img src={@professor.profile_picture_url} />
             </div>
           </div>
 
