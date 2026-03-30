@@ -65,9 +65,9 @@ defmodule AvaliaUspWeb.Themes.CinderTheme do
   set :filter_checkbox_label_class, "text-sm text-base-content cursor-pointer"
 
   # Multicheckboxes
-  set :filter_multicheckboxes_container_class, "flex flex-row gap-3"
-  # set :filter_multicheckboxes_option_class, "flex items-center gap-1.5"
-  # set :filter_multicheckboxes_checkbox_class, "checkbox checkbox-sm checkbox-primary"
+  set :filter_multicheckboxes_container_class, "flex flex-row gap-2 "
+  #  set :filter_multicheckboxes_option_class, "flex items-center"
+  set :filter_multicheckboxes_checkbox_class, "checkbox checkbox-primary checkbox-sm "
   # set :filter_multicheckboxes_label_class, "text-sm text-base-content cursor-pointer"
 
   # Range
