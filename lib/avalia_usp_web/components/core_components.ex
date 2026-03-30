@@ -48,26 +48,53 @@ defmodule AvaliaUspWeb.CoreComponents do
   def avaliacao_details_card(assigns) do
     ~H"""
     <div class="card bg-base-100 border border-base-300 shadow-sm">
-      <div class="card-body gap-4 flex items-center">
-        {@avaliacao.comentario}
+      <div class="card-body gap-6">
+        <div class="flex flex-col gap-1">
+          <div class="flex items-center justify-between">
+            <p class="text-xs uppercase font-semibold text-base-content/50">
+              Comentário geral
+            </p>
+            <div class="badge badge-primary badge-lg">
+              {@avaliacao.nota}
+            </div>
+          </div>
+          <p class="text-sm text-base-content">
+            {@avaliacao.comentario}
+          </p>
+        </div>
+        <div class="flex flex-col gap-1">
+          <p class="text-xs uppercase font-semibold text-base-content/50">
+            Avaliação
+          </p>
+          <p class="text-sm text-base-content">
+            {@avaliacao.comentario_avaliacao}
+          </p>
+        </div>
+        <div class="flex flex-col gap-1">
+          <p class="text-xs uppercase font-semibold text-base-content/50">
+            Presença
+          </p>
+          <p class="text-sm text-base-content">
+            {@avaliacao.comentario_presenca}
+          </p>
+        </div>
       </div>
-
-      <div class="flex justify-between p-3 border-t border-base-300">
-        <div>
+      <div class="flex justify-between items-center p-3 border-t border-base-300 text-sm">
+        <div class="flex items-center gap-1">
           <.icon name="hero-hand-thumb-up" />
           {@avaliacao.likes}
         </div>
-        <div class="flex items-end gap-4">
-          <p class="text-sm font-medium text-base-content/20">
+        <div class="flex items-center gap-4">
+          <p class="text-base-content/40">
             <%= if @avaliacao.avaliador.is_aluno_usp? do %>
               Avaliador verificado
             <% else %>
               Avaliador não verificado
             <% end %>
           </p>
-        </div>
-        <div class="flex items-end gap-4">
-          {@avaliacao.inserted_at |> Date.to_string()}
+          <p class="text-base-content/40">
+            {@avaliacao.inserted_at |> Date.to_string()}
+          </p>
         </div>
       </div>
     </div>

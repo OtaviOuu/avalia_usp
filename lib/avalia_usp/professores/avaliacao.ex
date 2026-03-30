@@ -56,7 +56,16 @@ defmodule AvaliaUsp.Professores.Avaliacao do
     end
 
     create :create do
-      accept [:nota, :comentario, :disciplina_id, :professor_id, :cobra_presenca]
+      accept [
+        :nota,
+        :comentario,
+        :disciplina_id,
+        :professor_id,
+        :cobra_presenca,
+        :comentario_avaliacao,
+        :comentario_presenca
+      ]
+
       primary? true
 
       validate present(:nota),
@@ -65,10 +74,19 @@ defmodule AvaliaUsp.Professores.Avaliacao do
       validate compare(:nota, greater_than_or_equal_to: 1, less_than_or_equal_to: 10),
         message: "A nota deve ser entre %{greater_than_or_equal_to} e %{less_than_or_equal_to}."
 
+      validate present(:comentario),
+        message: "O comentário é obrigatório."
+
       validate string_length(:comentario, max: 500, min: 10),
         message: "O comentário deve ter entre %{min} e %{max} caracteres."
 
-      change relate_actor(:avaliador, field: :id)
+      validate string_length(:comentario_avaliacao, max: 500),
+        message: "O comentário sobre avaliação deve ter no máximo %{max} caracteres."
+
+      validate string_length(:comentario_presenca, max: 500),
+        message: "O comentário sobre presença deve ter no máximo %{max} caracteres."
+
+      change(relate_actor(:avaliador, field: :id))
     end
 
     update :like do
@@ -106,7 +124,17 @@ defmodule AvaliaUsp.Professores.Avaliacao do
     attribute :comentario, :string do
       constraints max_length: 500
       public? true
+      allow_nil? false
+    end
+
+    attribute :comentario_avaliacao, :string do
       allow_nil? true
+      public? true
+    end
+
+    attribute :comentario_presenca, :string do
+      allow_nil? true
+      public? true
     end
 
     attribute :likes, :integer do

@@ -50,6 +50,9 @@ defmodule AvaliaUspWeb.AvaliarLive do
         </:actions>
       </.header>
       <.professor_details professor={@professor} />
+      <div class="alert alert-warning">
+      Todos os comentários são ANÔNIMOS. Todas as relações USER - AVALIAÇÂO são criptorgrafadas
+      </div>
       <.form
         for={@form}
         phx-submit="submit"
@@ -57,8 +60,10 @@ defmodule AvaliaUspWeb.AvaliarLive do
       >
         <.input field={@form[:disciplina_id]} type="select" options={@disciplinas_options} />
 
-        <.input field={@form[:nota]} type="number" placeholder="Nota" />
-        <.input field={@form[:comentario]} type="textarea" placeholder="Comentário" />
+        <.input field={@form[:nota]} type="number" label="Nota" placeholder="1-10" />
+        <.input field={@form[:comentario]} label="Comentário geral" type="textarea"  rows={10}/>
+        <.input field={@form[:comentario_avaliacao]} type="textarea" label="Comentário sobre avaliação" placeholder="Ex: provas escritas em aulas, trabalhos feitos em casa, listas de questões" />
+        <.input field={@form[:comentario_presenca]} placeholder="Ex: assinar lista no final da aula, presença online pelo e-disciplinas" type="textarea" label="Comentário sobre presença" />
         <div class="flex flex-row justify-between">
           <.input field={@form[:cobra_presenca]} type="checkbox" label="Cobra presença?" />
         </div>
