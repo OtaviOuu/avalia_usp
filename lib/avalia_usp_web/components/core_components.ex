@@ -125,7 +125,12 @@ defmodule AvaliaUspWeb.CoreComponents do
           </div>
 
           <div class="badge badge-ghost text-base font-medium">
-            ★ {@professor.media_avaliacoes}
+            <%= if @professor.media_avaliacoes do %>
+              <.icon name="hero-star"  />
+              {@professor.media_avaliacoes}
+            <% else %>
+              Sem avaliações
+            <% end %>
           </div>
         </div>
 
