@@ -49,7 +49,7 @@ defmodule AvaliaUsp.MixProject do
       {:bcrypt_elixir, "~> 3.0"},
       {:picosat_elixir, "~> 0.2"},
       {:sourceror, "~> 1.8", only: [:dev, :test]},
-      {:ash_admin, "~> 0.14"},
+      {:ash_admin, "~> 1.0.0-rc.0"},
       {:ash_authentication_phoenix, "~> 2.0"},
       {:ash_authentication, "~> 4.0"},
       {:ash_postgres, "~> 2.0"},
