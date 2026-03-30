@@ -48,6 +48,7 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
         :if={@professor.ok?}
         layout={:grid}
         grid_columns={1}
+        page_size={[default: 1, options: [10, 25, 50, 100]]}
         click={
           fn avaliacao ->
             JS.navigate(~p"/professores/#{@professor_nome}/avaliacoes/#{avaliacao.id}")

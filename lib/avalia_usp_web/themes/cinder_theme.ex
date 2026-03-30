@@ -149,37 +149,37 @@ defmodule AvaliaUspWeb.Themes.CinderTheme do
   set :button_disabled_class, "btn-disabled"
 
   # Paginação
-  set :pagination_wrapper_class, "mt-4 sm:mt-6"
+  # set :pagination_wrapper_class, "mt-4 sm:mt-6"
 
-  set :pagination_container_class,
-      "flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4"
+  # set :pagination_container_class,
+  # "flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4"
 
-  set :pagination_info_class, "text-xs sm:text-sm text-base-content/60 order-2 sm:order-1"
-  set :pagination_count_class, "text-xs sm:text-sm text-base-content/60"
-  set :pagination_nav_class, "join order-1 sm:order-2"
-  set :pagination_button_class, "join-item btn btn-sm"
-  set :pagination_current_class, "join-item btn btn-sm btn-primary"
+  # set :pagination_info_class, "text-xs sm:text-sm text-base-content/60 order-2 sm:order-1"
+  # set :pagination_count_class, "text-xs sm:text-sm text-base-content/60"
+  # set :pagination_nav_class, "join order-1 sm:order-2"
+  # set :pagination_button_class, "join-item btn btn-sm"
+  # set :pagination_current_class, "join-item btn btn-sm btn-primary"
 
   # Page size
-  set :page_size_container_class, "flex items-center gap-2 order-3"
-  set :page_size_label_class, "text-xs sm:text-sm text-base-content/60"
-  set :page_size_dropdown_container_class, "relative"
+  # set :page_size_container_class, "flex items-center gap-2 order-3"
+  # set :page_size_label_class, "text-xs sm:text-sm text-base-content/60"
+  # set :page_size_dropdown_container_class, "relative"
+  #
+  # set :page_size_dropdown_class,
+  #  "absolute bottom-full mb-1 right-0 bg-base-100 border border-base-300 rounded-lg shadow-lg py-1 min-w-[4rem]"
 
-  set :page_size_dropdown_class,
-      "absolute bottom-full mb-1 right-0 bg-base-100 border border-base-300 rounded-lg shadow-lg py-1 min-w-[4rem]"
+  # set :page_size_option_class,
+  #    "px-3 py-1.5 text-sm text-base-content hover:bg-base-200 cursor-pointer"
 
-  set :page_size_option_class,
-      "px-3 py-1.5 text-sm text-base-content hover:bg-base-200 cursor-pointer"
-
-  set :page_size_selected_class, "bg-primary/20 text-primary"
+  # set :page_size_selected_class, "bg-primary/20 text-primary"
 
   # Loading
-  set :loading_container_class, "relative min-h-[200px]"
+  # set :loading_container_class, "relative min-h-[200px]"
 
-  set :loading_overlay_class,
-      "absolute inset-0 bg-base-100/80 flex items-center justify-center z-10"
+  # set :loading_overlay_class,
+  "absolute inset-0 bg-base-100/80 flex items-center justify-center z-10"
 
-  set :loading_spinner_class, "loading loading-spinner loading-lg text-primary"
+  # set :loading_spinner_class, "loading loading-spinner loading-lg text-primary"
 
   # Empty / erro
   set :empty_class, "text-center text-base-content/40"

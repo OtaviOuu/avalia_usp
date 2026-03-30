@@ -43,7 +43,13 @@ defmodule AvaliaUsp.Professores.Avaliacao do
 
   actions do
     default_accept [:nota, :comentario, :disciplina_id]
-    defaults [:read, :destroy, :update]
+    defaults [:destroy, :update]
+
+    read :read do
+      primary? true
+
+      pagination required?: false, offset?: true, keyset?: true
+    end
 
     read :search_avaliacaoes do
       argument :professor_nome_completo, :string do
@@ -53,6 +59,8 @@ defmodule AvaliaUsp.Professores.Avaliacao do
       end
 
       filter expr(professor.nome_completo == ^arg(:professor_nome_completo))
+
+      pagination required?: false, offset?: true, keyset?: true
     end
 
     create :create do
