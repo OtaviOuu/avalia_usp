@@ -58,6 +58,12 @@ defmodule AvaliaUsp.Accounts.User do
     end
 
     strategies do
+      google do
+        client_id ""
+        redirect_uri "http://localhost:4000/auth/user/google/callback"
+        client_secret ""
+      end
+
       password :password do
         identity_field :email
         hash_provider AshAuthentication.BcryptProvider
@@ -85,6 +91,30 @@ defmodule AvaliaUsp.Accounts.User do
     read :me do
       filter expr(id == ^actor(:id))
       get? true
+    end
+
+    create :register_with_google do
+      argument :user_info, :map, allow_nil?: false
+      argument :oauth_tokens, :map, allow_nil?: false
+      upsert? true
+      upsert_identity :unique_email
+
+      change AshAuthentication.GenerateTokenChange
+
+      # Required if you have the `identity_resource` configuration enabled.
+      change AshAuthentication.Strategy.OAuth2.IdentityChange
+
+      change fn changeset, _ ->
+        user_info = Ash.Changeset.get_argument(changeset, :user_info)
+
+        Ash.Changeset.change_attributes(changeset, Map.take(user_info, ["email"]))
+      end
+
+      # Required if you're using the password & confirmation strategies
+      change AvaliaUsp.Accounts.Changes.IsAlunoUsp
+
+      upsert_fields []
+      change set_attribute(:confirmed_at, &DateTime.utc_now/0)
     end
 
     read :get_by_subject do
@@ -128,7 +158,7 @@ defmodule AvaliaUsp.Accounts.User do
 
       argument :password, :string do
         description "The password to check for the matching user."
-        allow_nil? false
+        allow_nil? true
         sensitive? true
       end
 
@@ -265,7 +295,7 @@ defmodule AvaliaUsp.Accounts.User do
       authorize_if actor_present()
     end
 
-    policy action([:read, :sign_in_with_password]) do
+    policy action([:read, :sign_in_with_password, :register_with_google]) do
       authorize_if always()
     end
   end
@@ -284,7 +314,7 @@ defmodule AvaliaUsp.Accounts.User do
     end
 
     attribute :hashed_password, :string do
-      allow_nil? false
+      allow_nil? true
       sensitive? true
     end
 

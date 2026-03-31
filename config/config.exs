@@ -6,6 +6,7 @@
 
 # General application configuration
 import Config
+config :ash_authentication, :debug?, true
 
 config :avalia_usp, AvaliaUsp.Vault,
   ciphers: [
