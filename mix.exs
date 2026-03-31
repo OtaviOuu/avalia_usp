@@ -83,7 +83,8 @@ defmodule AvaliaUsp.MixProject do
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
       {:cloak, "~> 1.1.4"},
-      {:ash_cloak, "~> 0.2.0"}
+      {:ash_cloak, "~> 0.2.0"},
+      {:floki, "~> 0.38.1"}
     ]
   end
 

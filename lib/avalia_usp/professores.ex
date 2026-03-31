@@ -10,6 +10,11 @@ defmodule AvaliaUsp.Professores do
   resources do
     resource AvaliaUsp.Professores.Professor do
       define :list_professores, action: :read
+
+      define :create_professor,
+        action: :create,
+        args: [:nome_completo, :sobrenome, :primeiro_nome, :profile_picture_url]
+
       define :get_professor_by_nome_completo, action: :read, get_by: [:nome_completo]
       define :search_professores, action: :search, args: [:search_term]
 
