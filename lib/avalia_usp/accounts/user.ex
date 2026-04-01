@@ -33,22 +33,6 @@ defmodule AvaliaUsp.Accounts.User do
   end
 
   authentication do
-    add_ons do
-      log_out_everywhere do
-        apply_on_password_change? true
-      end
-
-      confirmation :confirm_new_user do
-        monitor_fields [:email]
-        confirm_on_create? true
-        confirm_on_update? false
-        require_interaction? true
-        confirmed_at_field :confirmed_at
-        auto_confirm_actions [:sign_in_with_magic_link, :reset_password_with_token]
-        sender AvaliaUsp.Accounts.User.Senders.SendNewUserConfirmationEmail
-      end
-    end
-
     tokens do
       enabled? true
       token_resource AvaliaUsp.Accounts.Token
@@ -59,21 +43,9 @@ defmodule AvaliaUsp.Accounts.User do
 
     strategies do
       google do
-        client_id ""
+        client_id System.get_env("CLIENT_ID")
         redirect_uri "http://localhost:4000/auth/user/google/callback"
-        client_secret ""
-      end
-
-      password :password do
-        identity_field :email
-        hash_provider AshAuthentication.BcryptProvider
-
-        resettable do
-          sender AvaliaUsp.Accounts.User.Senders.SendPasswordResetEmail
-          # these configurations will be the default in a future release
-          password_reset_action_name :reset_password_with_token
-          request_password_reset_action_name :request_password_reset_token
-        end
+        client_secret System.get_env("CLIENT_SECRET")
       end
 
       remember_me :remember_me

@@ -92,24 +92,6 @@ defmodule AvaliaUspWeb.Router do
                     AvaliaUspWeb.AuthOverrides,
                     Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI
                   ]
-
-    # Remove this if you do not want to use the reset password feature
-    reset_route auth_routes_prefix: "/auth",
-                overrides: [
-                  AvaliaUspWeb.AuthOverrides,
-                  Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI
-                ]
-
-    # Remove this if you do not use the confirmation strategy
-    confirm_route AvaliaUsp.Accounts.User, :confirm_new_user,
-      auth_routes_prefix: "/auth",
-      overrides: [AvaliaUspWeb.AuthOverrides, Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI]
-
-    # Remove this if you do not use the magic link strategy.
-    magic_sign_in_route(AvaliaUsp.Accounts.User, :magic_link,
-      auth_routes_prefix: "/auth",
-      overrides: [AvaliaUspWeb.AuthOverrides, Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI]
-    )
   end
 
   # Other scopes may use custom stacks.
