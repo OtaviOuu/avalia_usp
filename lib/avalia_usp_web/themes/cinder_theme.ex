@@ -6,18 +6,32 @@ defmodule AvaliaUspWeb.Themes.CinderTheme do
   set :container_class, "container mx-auto"
 
   # Tabela
-  set :table_wrapper_class, "overflow-x-auto -mx-2 sm:mx-0"
-  set :table_class, "w-full border-collapse min-w-full"
-  set :thead_class, "bg-base-200"
-  set :header_row_class, "border-b border-base-300"
+  set :table_wrapper_class,
+      "card bg-base-100 border border-base-300 shadow-sm"
+
+  set :table_class,
+      "table table w-full text-sm"
+
+  set :thead_class,
+      "bg-base-200 sticky top-0 z-10"
+
+  set :header_row_class,
+      "border-b border-base-300"
 
   set :th_class,
-      "text-left whitespace-nowrap px-2 py-2 sm:px-4 sm:py-3 text-sm font-semibold text-base-content"
+      "text-left whitespace-nowrap px-3 py-2 sm:px-4 sm:py-3 font-semibold text-base-content"
 
-  set :tbody_class, "divide-y divide-base-200"
-  set :row_class, "hover:bg-base-200 transition-colors"
-  set :td_class, "px-2 py-2 sm:px-4 sm:py-3 text-sm text-base-content"
-  set :selected_row_class, "bg-primary/20"
+  set :tbody_class,
+      "divide-y divide-base-200"
+
+  set :row_class,
+      "hover:bg-base-200/70 transition-colors duration-150"
+
+  set :td_class,
+      "px-3 py-2 sm:px-4 sm:py-3 text-base-content align-middle"
+
+  set :selected_row_class,
+      "bg-primary/15 ring-1 ring-primary/30"
 
   # Controls
   set :controls_class, "mb-4 sm:mb-6 flex flex-col gap-3 sm:gap-4"

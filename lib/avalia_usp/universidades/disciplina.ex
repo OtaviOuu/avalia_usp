@@ -16,7 +16,13 @@ defmodule AvaliaUsp.Universidades.Disciplina do
 
   actions do
     default_accept [:*]
-    defaults [:read, :destroy, :create]
+    defaults [:destroy, :create]
+
+    read :read do
+      primary? true
+
+      pagination required?: false, offset?: true, keyset?: true
+    end
   end
 
   preparations do
