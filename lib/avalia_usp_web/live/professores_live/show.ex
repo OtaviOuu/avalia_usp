@@ -73,14 +73,13 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
           name="Disciplina"
           search
           filter={[
-            type: :select,
-            label: "Filtrar por disciplina",
-            prompt: "Todas",
+            type: :autocomplete,
+            placeholder: "Search products...",
+            label: "Disciplina",
             options:
               Enum.map(@professor.result.disciplinas, fn disciplina ->
                 {disciplina.nome, disciplina.nome}
               end),
-            match_mode: :any
           ]}
         />
         <:col

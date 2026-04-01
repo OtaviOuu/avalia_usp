@@ -33,7 +33,7 @@ defmodule AvaliaUspWeb.Themes.CinderTheme do
   set :filter_inputs_class, "flex flex-wrap gap-3 sm:gap-4"
   set :filter_input_wrapper_class, "flex flex-col gap-1"
   set :filter_label_class, "text-xs sm:text-sm font-medium text-base-content/60"
-  set :filter_text_input_class, "w-full"
+  # set :filter_text_input_class, "input w-full"
 
   set :filter_number_input_class,
       "w-full [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
