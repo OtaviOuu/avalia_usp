@@ -74,19 +74,21 @@ defmodule AvaliaUspWeb.ProfessoresLive.Show do
           search
           filter={[
             type: :autocomplete,
-            placeholder: "Search products...",
+            placeholder: "Procurar disciplinas",
             label: "Disciplina",
             options:
               Enum.map(@professor.result.disciplinas, fn disciplina ->
                 {disciplina.nome, disciplina.nome}
-              end),
+              end)
           ]}
         />
         <:col
           field="nota"
           filter={[
             type: :number_range,
-            min: 0, max: 10, step: 1
+            min: 0,
+            max: 10,
+            step: 1
           ]}
         />
         <:col

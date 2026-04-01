@@ -108,41 +108,35 @@ defmodule AvaliaUspWeb.CoreComponents do
     <div class="card bg-base-100 border border-base-300 shadow-sm">
       <div class="card-body gap-4">
         <div class="flex items-center gap-4">
-          <div class="avatar">
-            <div class="w-16 rounded-full">
+          <div class="avatar w-12 shrink-0">
+            <div class="rounded-full">
               <img src={@professor.profile_picture_url} />
             </div>
           </div>
-
-          <div class="flex-1">
-            <h2 class="card-title text-lg">
+          <div class="flex-1 min-w-0">
+            <h2 class="card-title text-lg truncate">
               {@professor.nome_completo}
             </h2>
-
-            <p class="text-sm opacity-60">
+            <p class="text-sm opacity-60 truncate">
               {@professor.email}
             </p>
           </div>
-
-          <div class="badge badge-ghost text-base font-medium">
+          <div class="badge badge-ghost text-base font-medium shrink-0">
             <%= if @professor.media_avaliacoes do %>
-              <.icon name="hero-star"  />
+              <.icon name="hero-star" />
               {@professor.media_avaliacoes}
             <% else %>
-              Sem avaliações
+              <span class="text-xs">Sem avaliações</span>
             <% end %>
           </div>
         </div>
-
         <div class="flex items-center gap-2 text-xs">
           <span class="badge badge-success badge-outline">
             {@professor.quantidade_avaliacoes_positivas}
           </span>
-
           <span class="badge badge-error badge-outline">
             {@professor.quantidade_avaliacoes_negativas}
           </span>
-
           <span class="badge badge-ghost">
             {@professor.quantidade_avaliacoes} total
           </span>
