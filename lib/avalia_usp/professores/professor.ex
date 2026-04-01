@@ -17,7 +17,13 @@ defmodule AvaliaUsp.Professores.Professor do
 
   actions do
     default_accept [:*]
-    defaults [:read, :create, :destroy, :update]
+    defaults [:read, :destroy, :update]
+
+    create :create do
+      accept [:*]
+      upsert? true
+      upsert_identity :unique_nome_completo
+    end
 
     update :avaliar do
       accept []

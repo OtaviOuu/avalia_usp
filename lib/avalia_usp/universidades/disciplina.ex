@@ -34,7 +34,7 @@ defmodule AvaliaUsp.Universidades.Disciplina do
 
     attribute :codigo, :string do
       description "Código da disciplina"
-      allow_nil? false
+      allow_nil? true
       public? true
     end
 

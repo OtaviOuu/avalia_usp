@@ -12,7 +12,7 @@ defmodule AvaliaUspWeb.HomeLive do
   def assign_professores(socket) do
     socket
     |> assign_async(:professores, fn ->
-      {:ok, %{professores: AvaliaUsp.Professores.list_professores!()}}
+      {:ok, %{professores: AvaliaUsp.Professores.list_professores!(query: [limit: 12])}}
     end)
   end
 
@@ -47,7 +47,7 @@ defmodule AvaliaUspWeb.HomeLive do
     <form phx-change="search" class="w-full">
       <label class="input input-bordered input-lg w-full">
         <.icon name="hero-magnifying-glass" />
-        <input type="search" name="professor_search_input" placeholder="buscar professores..." />
+        <input type="search" name="professor_search_input" placeholder="buscar professores..." phx-debounce="300" />
       </label>
     </form>
     """

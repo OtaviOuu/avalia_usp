@@ -10,7 +10,13 @@ defmodule AvaliaUsp.Universidades do
   resources do
     resource AvaliaUsp.Universidades.Universidade
     resource AvaliaUsp.Universidades.Disciplina
-    resource AvaliaUsp.Universidades.DisciplinaProfessor
+
+    resource AvaliaUsp.Universidades.DisciplinaProfessor do
+      define :associar_disciplina_no_professor,
+        action: :create,
+        args: [:professor_id, :disciplina_id]
+    end
+
     resource AvaliaUsp.Universidades.Faculdade
   end
 end
