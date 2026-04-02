@@ -17,7 +17,12 @@ defmodule AvaliaUsp.Professores.Professor do
 
   actions do
     default_accept [:*]
-    defaults [:read, :destroy, :update]
+    defaults [:destroy, :update]
+
+    read :read do
+      primary? true
+      pagination required?: false, offset?: true, keyset?: true
+    end
 
     create :create do
       accept [:*]
@@ -41,6 +46,8 @@ defmodule AvaliaUsp.Professores.Professor do
     end
 
     read :search do
+      pagination required?: false, offset?: true, keyset?: true
+
       argument :search_term, :string do
         description "Termo de busca para nome ou email do professor"
         allow_nil? true
@@ -52,6 +59,8 @@ defmodule AvaliaUsp.Professores.Professor do
                  ilike(sobrenome, "%" <> ^arg(:search_term) <> "%") or
                  ilike(email, "%" <> ^arg(:search_term) <> "%")
              )
+
+      prepare build(limit: 12)
     end
   end
 
