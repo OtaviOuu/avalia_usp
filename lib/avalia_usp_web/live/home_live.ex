@@ -4,16 +4,8 @@ defmodule AvaliaUspWeb.HomeLive do
   def mount(_params, _session, socket) do
     socket
     |> assign(:page_title, "Professores")
-    |> assign_professores()
     |> assign_stats()
     |> ok()
-  end
-
-  def assign_professores(socket) do
-    socket
-    |> assign_async(:professores, fn ->
-      {:ok, %{professores: AvaliaUsp.Professores.list_professores!(query: [limit: 12])}}
-    end)
   end
 
   def assign_stats(socket) do
@@ -27,64 +19,31 @@ defmodule AvaliaUspWeb.HomeLive do
     ~H"""
     <Layouts.app {assigns}>
       <.header>
-        <:actions></:actions>
+        Buscar Professores
+        <:actions>
+          <.button class="btn btn-secundary" phx-click={JS.navigate(~p"/disciplinas")}>
+            Disciplinas
+          </.button>
+        </:actions>
       </.header>
 
       <.stats_banner :if={@stats.ok?} stats={@stats} />
-      <.search_form />
 
-      <.async_result :let={professores} assign={@professores}>
-        <:loading><.loading_spinner /></:loading>
-        <:failed :let={_failure}>erro ao buscar profesosres</:failed>
-        <.professores_grid professores={professores} />
-      </.async_result>
+      <Cinder.collection
+        resource={AvaliaUsp.Professores.Professor}
+        theme={AvaliaUspWeb.Themes.CinderTheme}
+        layout={:grid}
+        grid_columns={2}
+        page_size={[default: 10, options: [10, 25, 50, 100]]}
+      >
+        <:col :let={professor} field="nome_completo" search></:col>
+
+        <:item :let={professor}>
+          <.professor_card professor={professor} />
+        </:item>
+      </Cinder.collection>
     </Layouts.app>
     """
-  end
-
-  defp search_form(assigns) do
-    ~H"""
-    <form phx-change="search" class="w-full">
-      <label class="input input-bordered input-lg w-full">
-        <.icon name="hero-magnifying-glass" />
-        <input type="search" name="professor_search_input" placeholder="buscar professores..." phx-debounce="300" />
-      </label>
-    </form>
-    """
-  end
-
-  def handle_event("search", %{"professor_search_input" => search_term}, socket) do
-    search_term = String.trim(search_term)
-
-    case search_term do
-      "" ->
-        socket
-        |> assign(:professores, Phoenix.LiveView.AsyncResult.loading())
-        |> start_async(:search_professores, fn ->
-          AvaliaUsp.Professores.list_professores!()
-        end)
-        |> noreply()
-
-      _ ->
-        socket
-        |> assign(:professores, Phoenix.LiveView.AsyncResult.loading())
-        |> start_async(:search_professores, fn ->
-          AvaliaUsp.Professores.search_professores!(search_term)
-        end)
-        |> noreply()
-    end
-  end
-
-  def handle_async(:search_professores, {:ok, result}, socket) do
-    socket
-    |> assign(:professores, Phoenix.LiveView.AsyncResult.ok(result))
-    |> noreply()
-  end
-
-  def handle_async(:search_professores, {:error, reason}, socket) do
-    socket
-    |> assign(:professores, Phoenix.LiveView.AsyncResult.failed(reason))
-    |> noreply()
   end
 
   attr :professor, AvaliaUsp.Professores.Professor, required: true
@@ -94,35 +53,33 @@ defmodule AvaliaUspWeb.HomeLive do
     <div
       phx-click={JS.navigate(~p"/professores/#{@professor.nome_completo}")}
       id={"professor-card-#{@professor.id}"}
-      class="card bg-base-100 border border-base-300 hover:border-primary transition cursor-pointer"
+      class="card h-full w-full bg-base-100 border border-base-300 hover:border-primary transition cursor-pointer"
     >
-      <div class="card-body gap-2">
-        <div class="flex items-center justify-between">
-          <h2 class="card-title text-base">
-            {@professor.nome_completo}
-          </h2>
-
-          <div :if={@professor.quantidade_avaliacoes != 0} class="badge badge-ghost badge-sm">
-            {@professor.media_avaliacoes}
+      <div class="card-body gap-2 p-4 sm:p-6 flex flex-col justify-between">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-start justify-between gap-2">
+            <h2 class="card-title text-sm leading-snug line-clamp-2">
+              {@professor.nome_completo}
+            </h2>
+            <div
+              :if={@professor.quantidade_avaliacoes != 0}
+              class="badge badge-ghost badge-sm shrink-0"
+            >
+              {@professor.media_avaliacoes}
+            </div>
           </div>
-
-          <div :if={@professor.quantidade_avaliacoes == 0}></div>
+          <p class="text-xs sm:text-sm opacity-60 truncate">
+            {@professor.email}
+          </p>
         </div>
-
-        <p class="opacity-60 truncate">
-          {@professor.email}
-        </p>
-
-        <div class="flex items-center gap-2 mt-2">
-          <span class="badge badge-success badge-outline">
+        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-1 sm:mt-2">
+          <span class="badge badge-success badge-outline badge-sm sm:badge-md">
             {@professor.quantidade_avaliacoes_positivas}
           </span>
-
-          <span class="badge badge-error badge-outline">
+          <span class="badge badge-error badge-outline badge-sm sm:badge-md">
             {@professor.quantidade_avaliacoes_negativas}
           </span>
-
-          <span class="badge badge-ghost">
+          <span class="badge badge-ghost badge-sm sm:badge-md">
             {@professor.quantidade_avaliacoes} total
           </span>
         </div>
@@ -133,31 +90,21 @@ defmodule AvaliaUspWeb.HomeLive do
 
   defp stats_banner(assigns) do
     ~H"""
-    <div class="stats sm:stats-horizontal card bg-base-100 border border-base-300 w-full">
-      <div class="stat place-items-center">
-        <div class="stat-title">Avaliações</div>
-        <div class="stat-value">{assigns.stats.result.avaliacoes}</div>
+    <div class="card bg-base-100 border border-base-300 w-full">
+      <div class="flex divide-x divide-base-300">
+        <div class="stat place-items-center flex-1 px-2 py-4">
+          <div class="stat-title text-xs sm:text-sm whitespace-nowrap">Avaliações</div>
+          <div class="stat-value text-xl sm:text-3xl">{assigns.stats.result.avaliacoes}</div>
+        </div>
+        <div class="stat place-items-center flex-1 px-2 py-4">
+          <div class="stat-title text-xs sm:text-sm whitespace-nowrap">Professores</div>
+          <div class="stat-value text-xl sm:text-3xl">{assigns.stats.result.professores}</div>
+        </div>
+        <div class="stat place-items-center flex-1 px-2 py-4">
+          <div class="stat-title text-xs sm:text-sm whitespace-nowrap">Disciplinas</div>
+          <div class="stat-value text-xl sm:text-3xl">{assigns.stats.result.disciplinas}</div>
+        </div>
       </div>
-
-      <div class="stat place-items-center">
-        <div class="stat-title">Professores</div>
-        <div class="stat-value">{assigns.stats.result.professores}</div>
-      </div>
-
-      <div class="stat place-items-center">
-        <div class="stat-title">Disciplinas</div>
-        <div class="stat-value">{assigns.stats.result.disciplinas}</div>
-      </div>
-    </div>
-    """
-  end
-
-  attr :professores, :list, required: true
-
-  defp professores_grid(assigns) do
-    ~H"""
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 ">
-      <.professor_card :for={professor <- @professores} professor={professor} />
     </div>
     """
   end
