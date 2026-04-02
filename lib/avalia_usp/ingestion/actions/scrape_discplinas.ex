@@ -5,15 +5,27 @@ defmodule AvaliaUsp.Ingestion.Actions.ScrapeDiscplinas do
   @domain "https://edisciplinas.usp.br"
   @base_url @domain <> "/enrol/index.php"
   @cookie System.get_env("EDISCIPLINAS_COOKIE")
+  @urls_file "urls.txt"
 
   def run(_action, _input, _context) do
-    Enum.each(110_008..120_008, fn id ->
-      get_disciplina_html_tree(id)
-      |> scrape()
-    end)
+    dbg(@cookie)
+
+    141_397..141_598
+    |> Task.async_stream(
+      fn id ->
+        get_disciplina_html_tree(id)
+        |> scrape()
+      end,
+      max_concurrency: 50,
+      timeout: :infinity,
+      ordered: false
+    )
+    |> Stream.run()
 
     {:ok, []}
   end
+
+  defp scrape(nil), do: :error
 
   defp scrape(html_tree) do
     disciplina_nome =
@@ -111,11 +123,35 @@ defmodule AvaliaUsp.Ingestion.Actions.ScrapeDiscplinas do
   def get_disciplina_html_tree(id) do
     url = @base_url <> "?id=#{id}"
 
-    headers = [
-      {"Cookie", @cookie}
-    ]
+    ja_existe =
+      File.exists?(@urls_file) and
+        @urls_file
+        |> File.stream!()
+        |> Enum.any?(fn linha -> String.trim(linha) == url end)
 
-    Req.get!(url, headers: headers).body
-    |> Floki.parse_document!()
+    if ja_existe do
+      dbg("URL já existe, pulando: #{url}")
+      nil
+    else
+      File.write(@urls_file, url <> "\n", [:append])
+
+      headers = [
+        {"Cookie", @cookie}
+      ]
+
+      case Req.get(url,
+             headers: headers,
+             finch: MyFinch,
+             receive_timeout: 60_000,
+             pool_timeout: 60_000
+           ) do
+        {:ok, resp} ->
+          Floki.parse_document!(resp.body)
+
+        {:error, err} ->
+          dbg(err)
+          nil
+      end
+    end
   end
 end

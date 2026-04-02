@@ -18,7 +18,12 @@ defmodule AvaliaUsp.Application do
       # Start to serve requests, typically the last entry
       AvaliaUspWeb.Endpoint,
       {AshAuthentication.Supervisor, [otp_app: :avalia_usp]},
-      AvaliaUsp.Vault
+      AvaliaUsp.Vault,
+      {Finch,
+       name: MyFinch,
+       pools: %{
+         default: [size: 200, count: 5]
+       }}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
