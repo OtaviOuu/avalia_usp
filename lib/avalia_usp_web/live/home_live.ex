@@ -37,6 +37,7 @@ defmodule AvaliaUspWeb.HomeLive do
         page_size={[default: 10, options: [10, 25, 50, 100]]}
       >
         <:col :let={professor} field="nome_completo" search></:col>
+        <:col :let={professor} field="quantidade_avaliacoes" sort></:col>
 
         <:item :let={professor}>
           <.professor_card professor={professor} />

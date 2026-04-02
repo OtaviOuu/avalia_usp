@@ -103,7 +103,7 @@ defmodule AvaliaUspWeb.Themes.CinderTheme do
   set :filter_count_class, "badge badge-sm badge-primary"
 
   # Sort
-  set :sort_container_class, "bg-base-200 border border-base-300 rounded-lg"
+  set :sort_container_class, "card bg-base-100 border border-base-300 shadow-sm"
 
   set :sort_controls_class,
       "flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 p-3 sm:p-4"
