@@ -48,14 +48,7 @@ defmodule AvaliaUspWeb.Layouts do
           <%= if @current_user && @current_user.is_aluno_usp? do %>
             <li class="badge badge-info">Aluno USP</li>
           <% else %>
-            <div class="tooltip tooltip-bottom">
-              <div class="tooltip-content">
-                <span class="text-sm">
-                  faça login com uma conta USP para ser verificado
-                </span>
-              </div>
-              <li :if={@current_user} class="badge badge-warning">Não Aluno USP</li>
-            </div>
+            <li :if={@current_user} class="badge badge-warning">Não Aluno USP</li>
           <% end %>
           <.theme_toggle />
         </ul>

@@ -34,7 +34,7 @@ defmodule AvaliaUspWeb.HomeLive do
         theme={AvaliaUspWeb.Themes.CinderTheme}
         layout={:grid}
         grid_columns={2}
-        page_size={[default: 10, options: [10, 25, 50, 100]]}
+        page_size={[default: 10]}
       >
         <:col :let={professor} field="nome_completo" search></:col>
         <:col :let={professor} field="quantidade_avaliacoes" sort></:col>
