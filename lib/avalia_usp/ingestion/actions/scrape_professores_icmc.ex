@@ -12,7 +12,8 @@ defmodule AvaliaUsp.Ingestion.Actions.ScrapeProfessoresIcmc do
     Ash.bulk_create(attrs, AvaliaUsp.Professores.Professor, :create,
       authorize?: false,
       stop_on_error?: false,
-      return_errors?: false
+      return_errors?: false,
+      upsert_fields: [:sobrenome, :primeiro_nome]
     )
 
     {:ok, attrs}

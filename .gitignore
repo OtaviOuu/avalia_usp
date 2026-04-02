@@ -1,3 +1,6 @@
+*.sql
+*.txt
+
 .elixir_ls/
 .env
 
