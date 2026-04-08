@@ -18,7 +18,9 @@ defmodule AvaliaUsp.Application do
       # Start to serve requests, typically the last entry
       AvaliaUspWeb.Endpoint,
       {AshAuthentication.Supervisor, [otp_app: :avalia_usp]},
+      {Absinthe.Subscription, AvaliaUspWeb.Endpoint},
       AvaliaUsp.Vault,
+      AshGraphql.Subscription.Batcher,
       {Finch,
        name: MyFinch,
        pools: %{

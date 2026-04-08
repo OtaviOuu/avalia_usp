@@ -6,6 +6,7 @@
 
 # General application configuration
 import Config
+config :ash_graphql, authorize_update_destroy_with_error?: true
 config :ash_authentication, :debug?, true
 
 config :avalia_usp, AvaliaUsp.Vault,
@@ -55,6 +56,7 @@ config :spark,
     remove_parens?: true,
     "Ash.Resource": [
       section_order: [
+        :graphql,
         :rate_limit,
         :json_api,
         :admin,
@@ -80,6 +82,7 @@ config :spark,
     ],
     "Ash.Domain": [
       section_order: [
+        :graphql,
         :json_api,
         :admin,
         :resources,

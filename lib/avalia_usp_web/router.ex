@@ -5,6 +5,10 @@ defmodule AvaliaUspWeb.Router do
 
   import AshAuthentication.Plug.Helpers
 
+  pipeline :graphql do
+    plug AshGraphql.Plug
+  end
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -19,6 +23,17 @@ defmodule AvaliaUspWeb.Router do
     plug :accepts, ["json"]
     plug :load_from_bearer
     plug :set_actor, :user
+  end
+
+  scope "/gql" do
+    pipe_through [:graphql]
+
+    forward "/playground", Absinthe.Plug.GraphiQL,
+      schema: Module.concat(["AvaliaUspWeb.GraphqlSchema"]),
+      socket: Module.concat(["AvaliaUspWeb.GraphqlSocket"]),
+      interface: :simple
+
+    forward "/", Absinthe.Plug, schema: Module.concat(["AvaliaUspWeb.GraphqlSchema"])
   end
 
   scope "/api/json" do

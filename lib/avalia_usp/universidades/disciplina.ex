@@ -3,7 +3,15 @@ defmodule AvaliaUsp.Universidades.Disciplina do
     otp_app: :avalia_usp,
     domain: AvaliaUsp.Universidades,
     data_layer: AshPostgres.DataLayer,
-    extensions: [AshJsonApi.Resource, AshAdmin.Resource]
+    extensions: [AshGraphql.Resource, AshJsonApi.Resource, AshAdmin.Resource]
+
+  graphql do
+    type :disciplina
+
+    queries do
+      list :list_disciplinas, :read
+    end
+  end
 
   json_api do
     type "disciplina"

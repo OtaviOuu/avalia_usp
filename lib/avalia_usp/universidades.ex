@@ -1,7 +1,7 @@
 defmodule AvaliaUsp.Universidades do
   use Ash.Domain,
     otp_app: :avalia_usp,
-    extensions: [AshJsonApi.Domain, AshAdmin.Domain]
+    extensions: [AshGraphql.Domain, AshJsonApi.Domain, AshAdmin.Domain]
 
   json_api do
     routes do
