@@ -3,7 +3,17 @@ defmodule AvaliaUsp.Universidades.Disciplina do
     otp_app: :avalia_usp,
     domain: AvaliaUsp.Universidades,
     data_layer: AshPostgres.DataLayer,
-    extensions: [AshAdmin.Resource]
+    extensions: [AshJsonApi.Resource, AshAdmin.Resource]
+
+  json_api do
+    type "disciplina"
+
+    default_fields [
+      :professores
+    ]
+
+    includes :professores
+  end
 
   admin do
     label_field :nome
@@ -22,6 +32,8 @@ defmodule AvaliaUsp.Universidades.Disciplina do
       primary? true
 
       pagination required?: false, offset?: true, keyset?: true
+
+      prepare build(limit: 1000)
     end
   end
 
@@ -52,6 +64,7 @@ defmodule AvaliaUsp.Universidades.Disciplina do
       through AvaliaUsp.Universidades.DisciplinaProfessor
       destination_attribute_on_join_resource :professor_id
       source_attribute_on_join_resource :disciplina_id
+      public? true
     end
   end
 

@@ -4,7 +4,11 @@ defmodule AvaliaUsp.Professores.Professor do
     domain: AvaliaUsp.Professores,
     data_layer: AshPostgres.DataLayer,
     authorizers: [Ash.Policy.Authorizer],
-    extensions: [AshAdmin.Resource, AshAuthentication, AshPhoenix]
+    extensions: [AshJsonApi.Resource, AshAdmin.Resource, AshAuthentication, AshPhoenix]
+
+  json_api do
+    type "professor"
+  end
 
   admin do
     label_field :nome_completo

@@ -1,7 +1,7 @@
 defmodule AvaliaUsp.Professores do
   use Ash.Domain,
     otp_app: :avalia_usp,
-    extensions: [AshAdmin.Domain, AshPhoenix]
+    extensions: [AshJsonApi.Domain, AshAdmin.Domain, AshPhoenix]
 
   admin do
     show? true

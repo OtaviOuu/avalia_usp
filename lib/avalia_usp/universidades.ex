@@ -1,7 +1,15 @@
 defmodule AvaliaUsp.Universidades do
   use Ash.Domain,
     otp_app: :avalia_usp,
-    extensions: [AshAdmin.Domain]
+    extensions: [AshJsonApi.Domain, AshAdmin.Domain]
+
+  json_api do
+    routes do
+      base_route "/disciplinas", AvaliaUsp.Universidades.Disciplina do
+        index :read
+      end
+    end
+  end
 
   admin do
     show? true
