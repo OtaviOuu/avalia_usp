@@ -8,6 +8,7 @@ defmodule AvaliaUsp.Professores.Professor do
 
   json_api do
     type "professor"
+    includes [:disciplinas]
   end
 
   admin do
@@ -26,6 +27,8 @@ defmodule AvaliaUsp.Professores.Professor do
     read :read do
       primary? true
       pagination required?: false, offset?: true, keyset?: true
+
+      prepare build(limit: 1000)
     end
 
     create :create do
@@ -120,11 +123,13 @@ defmodule AvaliaUsp.Professores.Professor do
       through AvaliaUsp.Universidades.DisciplinaProfessor
       destination_attribute_on_join_resource :disciplina_id
       source_attribute_on_join_resource :professor_id
+      public? true
     end
 
     has_many :avaliacoes, AvaliaUsp.Professores.Avaliacao do
       source_attribute :id
       destination_attribute :professor_id
+      public? true
     end
   end
 

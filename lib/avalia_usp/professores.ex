@@ -3,6 +3,14 @@ defmodule AvaliaUsp.Professores do
     otp_app: :avalia_usp,
     extensions: [AshJsonApi.Domain, AshAdmin.Domain, AshPhoenix]
 
+  json_api do
+    routes do
+      base_route "/professores", AvaliaUsp.Professores.Professor do
+        index :read
+      end
+    end
+  end
+
   admin do
     show? true
   end

@@ -8,10 +8,6 @@ defmodule AvaliaUsp.Universidades.Disciplina do
   json_api do
     type "disciplina"
 
-    default_fields [
-      :professores
-    ]
-
     includes :professores
   end
 
